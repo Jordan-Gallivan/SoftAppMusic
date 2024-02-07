@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27B2B7166B000804477 /* UserProfileData.swift */; };
+		4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27D2B71683C00804477 /* EmailRegex.swift */; };
+		4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27F2B716B1A00804477 /* MusicPreferences.swift */; };
+		4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2822B71B61B00804477 /* CreateUserView.swift */; };
 		4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */; };
 		4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586582B6D886D00ACB074 /* ContentView.swift */; };
 		4C45865B2B6D886D00ACB074 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45865A2B6D886D00ACB074 /* Item.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C16F27B2B7166B000804477 /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
+		4C16F27D2B71683C00804477 /* EmailRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRegex.swift; sourceTree = "<group>"; };
+		4C16F27F2B716B1A00804477 /* MusicPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPreferences.swift; sourceTree = "<group>"; };
+		4C16F2822B71B61B00804477 /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
 		4C4586532B6D886D00ACB074 /* SoftAppMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftAppMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicApp.swift; sourceTree = "<group>"; };
 		4C4586582B6D886D00ACB074 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -73,6 +81,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C16F27A2B71668D00804477 /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				4C16F2812B71B60300804477 /* Views */,
+				4C16F27B2B7166B000804477 /* UserProfileData.swift */,
+				4C16F27D2B71683C00804477 /* EmailRegex.swift */,
+				4C16F27F2B716B1A00804477 /* MusicPreferences.swift */,
+			);
+			path = UserProfile;
+			sourceTree = "<group>";
+		};
+		4C16F2812B71B60300804477 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4C16F2822B71B61B00804477 /* CreateUserView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		4C45864A2B6D886D00ACB074 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +123,7 @@
 		4C4586552B6D886D00ACB074 /* SoftAppMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C16F27A2B71668D00804477 /* UserProfile */,
 				4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */,
 				4C4586582B6D886D00ACB074 /* ContentView.swift */,
 				4C45865A2B6D886D00ACB074 /* Item.swift */,
@@ -261,7 +289,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */,
+				4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */,
 				4C45865B2B6D886D00ACB074 /* Item.swift in Sources */,
+				4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */,
+				4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */,
+				4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */,
 				4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
