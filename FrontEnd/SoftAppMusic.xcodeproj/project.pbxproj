@@ -11,6 +11,9 @@
 		4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27D2B71683C00804477 /* EmailRegex.swift */; };
 		4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27F2B716B1A00804477 /* MusicPreferences.swift */; };
 		4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2822B71B61B00804477 /* CreateUserView.swift */; };
+		4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2852B71BFCD00804477 /* AsyncStatus.swift */; };
+		4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2882B71C16500804477 /* FetchUserData.swift */; };
+		4C16F28B2B71C21800804477 /* FetchMusicPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */; };
 		4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */; };
 		4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586582B6D886D00ACB074 /* ContentView.swift */; };
 		4C45865B2B6D886D00ACB074 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45865A2B6D886D00ACB074 /* Item.swift */; };
@@ -43,6 +46,9 @@
 		4C16F27D2B71683C00804477 /* EmailRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRegex.swift; sourceTree = "<group>"; };
 		4C16F27F2B716B1A00804477 /* MusicPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPreferences.swift; sourceTree = "<group>"; };
 		4C16F2822B71B61B00804477 /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
+		4C16F2852B71BFCD00804477 /* AsyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStatus.swift; sourceTree = "<group>"; };
+		4C16F2882B71C16500804477 /* FetchUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserData.swift; sourceTree = "<group>"; };
+		4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMusicPreferences.swift; sourceTree = "<group>"; };
 		4C4586532B6D886D00ACB074 /* SoftAppMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftAppMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicApp.swift; sourceTree = "<group>"; };
 		4C4586582B6D886D00ACB074 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +106,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4C16F2842B71BFB500804477 /* FetchComponents */ = {
+			isa = PBXGroup;
+			children = (
+				4C16F2852B71BFCD00804477 /* AsyncStatus.swift */,
+				4C16F2882B71C16500804477 /* FetchUserData.swift */,
+				4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */,
+			);
+			path = FetchComponents;
+			sourceTree = "<group>";
+		};
+		4C16F2872B71C0CC00804477 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		4C45864A2B6D886D00ACB074 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +146,8 @@
 		4C4586552B6D886D00ACB074 /* SoftAppMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C16F2872B71C0CC00804477 /* Models */,
+				4C16F2842B71BFB500804477 /* FetchComponents */,
 				4C16F27A2B71668D00804477 /* UserProfile */,
 				4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */,
 				4C4586582B6D886D00ACB074 /* ContentView.swift */,
@@ -291,9 +316,12 @@
 				4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */,
 				4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */,
 				4C45865B2B6D886D00ACB074 /* Item.swift in Sources */,
+				4C16F28B2B71C21800804477 /* FetchMusicPreferences.swift in Sources */,
 				4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */,
 				4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */,
 				4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */,
+				4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */,
+				4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */,
 				4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

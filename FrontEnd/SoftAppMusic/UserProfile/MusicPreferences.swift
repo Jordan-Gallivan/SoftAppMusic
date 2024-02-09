@@ -8,7 +8,6 @@
 import Foundation
 
 struct MusicPreferences: Codable {
-    let userEmail: String
     var decades: [String: Bool]
     var genres: [String: Bool]
 }

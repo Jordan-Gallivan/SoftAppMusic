@@ -15,6 +15,7 @@ struct UserProfileData: Codable {
     var lastName: String = ""
     var spotifyConsent: Bool = false
     
+    
     mutating func setEmail(_ newEmail: String) -> Bool {
         if newEmail.firstMatch(of: EmailRegex)?.count == 0 {
             return false
@@ -22,4 +23,8 @@ struct UserProfileData: Codable {
         self.userEmail = newEmail
         return true
     }
+}
+
+struct SpotifyLogin: Codable {
+    // MARK: figure out where this goes
 }
