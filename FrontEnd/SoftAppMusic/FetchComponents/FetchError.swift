@@ -7,4 +7,7 @@
 
 import Foundation
 
-enum 
+enum FetchError: Error {
+    case UrlError(message: String)
+    case HTTPResponseError(message: String)
+}

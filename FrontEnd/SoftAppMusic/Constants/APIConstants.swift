@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum APIConstants {
+    static let API_URL = "https://music-app-zu7a.onrender.com"
+    static let LOGIN_POST = "login"
+}

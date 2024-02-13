@@ -10,10 +10,12 @@
 		4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27B2B7166B000804477 /* UserProfileData.swift */; };
 		4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27D2B71683C00804477 /* EmailRegex.swift */; };
 		4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27F2B716B1A00804477 /* MusicPreferences.swift */; };
-		4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2822B71B61B00804477 /* CreateUserView.swift */; };
+		4C16F2832B71B61B00804477 /* CreateUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2822B71B61B00804477 /* CreateUserProfileView.swift */; };
 		4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2852B71BFCD00804477 /* AsyncStatus.swift */; };
 		4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2882B71C16500804477 /* FetchUserData.swift */; };
 		4C16F28B2B71C21800804477 /* FetchMusicPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */; };
+		4C16F28D2B76B8D200804477 /* CreateUserLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28C2B76B8D200804477 /* CreateUserLoginView.swift */; };
+		4C16F28F2B76BACD00804477 /* CreateUserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */; };
 		4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */; };
 		4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586582B6D886D00ACB074 /* ContentView.swift */; };
 		4C45865B2B6D886D00ACB074 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45865A2B6D886D00ACB074 /* Item.swift */; };
@@ -22,6 +24,10 @@
 		4C45866A2B6D886E00ACB074 /* SoftAppMusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586692B6D886E00ACB074 /* SoftAppMusicTests.swift */; };
 		4C4586742B6D886E00ACB074 /* SoftAppMusicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586732B6D886E00ACB074 /* SoftAppMusicUITests.swift */; };
 		4C4586762B6D886E00ACB074 /* SoftAppMusicUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586752B6D886E00ACB074 /* SoftAppMusicUITestsLaunchTests.swift */; };
+		4CE8FE132B7BF4DB00756509 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8FE122B7BF4DB00756509 /* ApplicationData.swift */; };
+		4CE8FE152B7BF65500756509 /* FetchUserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8FE142B7BF65500756509 /* FetchUserLogin.swift */; };
+		4CE8FE182B7BFB7000756509 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8FE172B7BFB7000756509 /* APIConstants.swift */; };
+		4CE8FE1A2B7BFCDB00756509 /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8FE192B7BFCDB00756509 /* FetchError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,10 +51,12 @@
 		4C16F27B2B7166B000804477 /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
 		4C16F27D2B71683C00804477 /* EmailRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRegex.swift; sourceTree = "<group>"; };
 		4C16F27F2B716B1A00804477 /* MusicPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPreferences.swift; sourceTree = "<group>"; };
-		4C16F2822B71B61B00804477 /* CreateUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserView.swift; sourceTree = "<group>"; };
+		4C16F2822B71B61B00804477 /* CreateUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserProfileView.swift; sourceTree = "<group>"; };
 		4C16F2852B71BFCD00804477 /* AsyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStatus.swift; sourceTree = "<group>"; };
 		4C16F2882B71C16500804477 /* FetchUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserData.swift; sourceTree = "<group>"; };
 		4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMusicPreferences.swift; sourceTree = "<group>"; };
+		4C16F28C2B76B8D200804477 /* CreateUserLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserLoginView.swift; sourceTree = "<group>"; };
+		4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserValidation.swift; sourceTree = "<group>"; };
 		4C4586532B6D886D00ACB074 /* SoftAppMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftAppMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicApp.swift; sourceTree = "<group>"; };
 		4C4586582B6D886D00ACB074 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +68,10 @@
 		4C45866F2B6D886E00ACB074 /* SoftAppMusicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoftAppMusicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4586732B6D886E00ACB074 /* SoftAppMusicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicUITests.swift; sourceTree = "<group>"; };
 		4C4586752B6D886E00ACB074 /* SoftAppMusicUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4CE8FE122B7BF4DB00756509 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
+		4CE8FE142B7BF65500756509 /* FetchUserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserLogin.swift; sourceTree = "<group>"; };
+		4CE8FE172B7BFB7000756509 /* APIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
+		4CE8FE192B7BFCDB00756509 /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +113,8 @@
 		4C16F2812B71B60300804477 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4C16F2822B71B61B00804477 /* CreateUserView.swift */,
+				4C16F2822B71B61B00804477 /* CreateUserProfileView.swift */,
+				4C16F28C2B76B8D200804477 /* CreateUserLoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +125,9 @@
 				4C16F2852B71BFCD00804477 /* AsyncStatus.swift */,
 				4C16F2882B71C16500804477 /* FetchUserData.swift */,
 				4C16F28A2B71C21800804477 /* FetchMusicPreferences.swift */,
+				4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */,
+				4CE8FE142B7BF65500756509 /* FetchUserLogin.swift */,
+				4CE8FE192B7BFCDB00756509 /* FetchError.swift */,
 			);
 			path = FetchComponents;
 			sourceTree = "<group>";
@@ -146,6 +162,8 @@
 		4C4586552B6D886D00ACB074 /* SoftAppMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4CE8FE162B7BFB6200756509 /* Constants */,
+				4CE8FE122B7BF4DB00756509 /* ApplicationData.swift */,
 				4C16F2872B71C0CC00804477 /* Models */,
 				4C16F2842B71BFB500804477 /* FetchComponents */,
 				4C16F27A2B71668D00804477 /* UserProfile */,
@@ -181,6 +199,14 @@
 				4C4586752B6D886E00ACB074 /* SoftAppMusicUITestsLaunchTests.swift */,
 			);
 			path = SoftAppMusicUITests;
+			sourceTree = "<group>";
+		};
+		4CE8FE162B7BFB6200756509 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				4CE8FE172B7BFB7000756509 /* APIConstants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,13 +340,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */,
-				4C16F2832B71B61B00804477 /* CreateUserView.swift in Sources */,
+				4CE8FE152B7BF65500756509 /* FetchUserLogin.swift in Sources */,
+				4C16F2832B71B61B00804477 /* CreateUserProfileView.swift in Sources */,
+				4CE8FE1A2B7BFCDB00756509 /* FetchError.swift in Sources */,
 				4C45865B2B6D886D00ACB074 /* Item.swift in Sources */,
 				4C16F28B2B71C21800804477 /* FetchMusicPreferences.swift in Sources */,
+				4C16F28F2B76BACD00804477 /* CreateUserValidation.swift in Sources */,
 				4C16F2802B716B1A00804477 /* MusicPreferences.swift in Sources */,
 				4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */,
 				4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */,
 				4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */,
+				4CE8FE132B7BF4DB00756509 /* ApplicationData.swift in Sources */,
+				4CE8FE182B7BFB7000756509 /* APIConstants.swift in Sources */,
+				4C16F28D2B76B8D200804477 /* CreateUserLoginView.swift in Sources */,
 				4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */,
 				4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */,
 			);

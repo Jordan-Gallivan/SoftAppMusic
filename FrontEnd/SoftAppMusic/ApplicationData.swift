@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+class AppData: ObservableObject {
+    /// Navigation Path
+    @Published var viewPath = NavigationPath()
+}
