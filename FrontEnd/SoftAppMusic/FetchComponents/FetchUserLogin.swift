@@ -54,14 +54,15 @@ class FetchUserLogin: ObservableObject {
     /// Validates user login data and returns a JWT token if login is valid
     ///
     /// - Returns: JWT token String if login is valid and class variable status is set to .success.
-    /// Otherwise class variable status is set to .error or .failure and nil is returned.  
+    /// Otherwise class variable status is set to .error or .failure and nil is returned.
+    @discardableResult
     public func attemptLogin() async throws -> String? {
         // validate number of attempted logins
-//        attempts += 1
-//        guard attempts <= 3 else {
-//            status = .failure(.ValidUsername, .TooManyAttempts)
-//            return nil
-//        }
+        guard attempts <= 3 else {
+            status = .failure(.ValidUsername, .TooManyAttempts)
+            return nil
+        }
+        
         // validate user entered a username and password
         guard enteredUserName.count > 0 && enteredPassword.count > 0 else {
             let usernameStatus: UsernameStatus = enteredUserName.count == 0 ? .NoUsername : .ValidUsername
@@ -108,6 +109,7 @@ class FetchUserLogin: ObservableObject {
                 return nil
             }
             let token = try JSONDecoder().decode(Token.self, from: responseData)
+            status = .success(token.token)
             return token.token
             
         } catch {
@@ -119,10 +121,12 @@ class FetchUserLogin: ObservableObject {
     
     private func handleInvalidUserNamePassword(_ response: InvalidUsernamePasswordResponse) {
         if !response.username {
+            attempts = 0
             status = .failure(.InvalidUsername, .PasswordDoesNotMatchUsername)
             return
         }
         status = .failure(.ValidUsername, .PasswordDoesNotMatchUsername)
+        attempts += 1
     }
     
 }
