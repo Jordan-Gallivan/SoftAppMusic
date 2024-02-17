@@ -32,4 +32,14 @@ public class UserController {
                     .body(e.getMessage());
         }
     }
+
+    @PostMapping(path = "login")
+    public  ResponseEntity<?> loginUser(@RequestBody User user) {
+        boolean isAuthenticated = userService.authenticateUser(user);
+        if (isAuthenticated) {
+            return ResponseEntity.ok("authenticated");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
 }

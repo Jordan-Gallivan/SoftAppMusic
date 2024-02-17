@@ -27,4 +27,13 @@ public class UserService {
        }
        userRepository.save(user);
     }
+
+    public boolean authenticateUser(User user) {
+        Optional<User> userOptional = userRepository.findUserByUsername(user.getUsername());
+        if(userOptional.isPresent()) {
+            User request = userOptional.get();
+            return request.getPassword().equals(user.getPassword());
+        }
+        return false;
+    }
 }
