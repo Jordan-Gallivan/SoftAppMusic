@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SoftAppMusic.iml" filepath="$PROJECT_DIR$/.idea/SoftAppMusic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackEnd/demo.iml" filepath="$PROJECT_DIR$/BackEnd/demo.iml" />
     </modules>
   </component>
 </project>
