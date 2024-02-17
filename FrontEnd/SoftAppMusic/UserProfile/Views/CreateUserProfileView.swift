@@ -14,11 +14,11 @@ import SwiftUI
 ///     o async load struct
 ///     o context
 ///     o environment app data
-///     o 
+///     o
 ///
 ///
 
-struct CreateUserView: View {
+struct CreateUserProfileView: View {
     @State var userProfileData = UserProfileData()
     
     var body: some View {
