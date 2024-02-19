@@ -37,16 +37,15 @@ class FetchUserLogin: ObservableObject {
     
     private var attempts = 0
     
+    /// structs to decode/encode JSON
     private struct UsernameAndPassword: Encodable {
         let username: String
         let password: String
     }
-    
     private struct InvalidUsernamePasswordResponse: Decodable {
         let username: Bool
         let password: Bool
     }
-    
     private struct Token: Decodable {
         let token: String
     }
@@ -56,7 +55,7 @@ class FetchUserLogin: ObservableObject {
     /// - Returns: JWT token String if login is valid and class variable status is set to .success.
     /// Otherwise class variable status is set to .error or .failure and nil is returned.
     @discardableResult
-    public func attemptLogin() async throws -> String? {
+    public func attemptLogin(token: String?) async -> String? {
         // validate number of attempted logins
         guard attempts <= 3 else {
             status = .failure(.ValidUsername, .TooManyAttempts)
@@ -71,24 +70,12 @@ class FetchUserLogin: ObservableObject {
             return nil
         }
         
-        // establish HTTP POST request
-        let url = URL(string: "\(APIConstants.API_URL)/\(APIConstants.LOGIN_POST)")
-        guard let url else {
-            NSLog("ERROR ESTABLISHING URL")
-            status = .error(FetchError.UrlError(message: "ERROR ESTABLISHING URL: \(APIConstants.API_URL)/\(APIConstants.LOGIN_POST)"))
-            return nil
-        }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
         let message = UsernameAndPassword(username: enteredUserName, password: enteredPassword)
         
         do {
-            let data = try JSONEncoder().encode(message)
-            request.httpBody = data
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let (responseData, response) = try await URLSession.shared.data(for: request)
+            let (responseData, response) = try await HTTPRequests.POST(urlString: "\(APIConstants.API_URL)/\(APIConstants.LOGIN_POST)",
+                                                                       message: message,
+                                                                       token: token)
             
             guard let response_status = response as? HTTPURLResponse else {
                 NSLog("Corrupt HTTP Response Code")
