@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-alpine AS build
+FROM maven:3.8.4-openjdk-21 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 
