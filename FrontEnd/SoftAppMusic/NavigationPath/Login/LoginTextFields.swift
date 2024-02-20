@@ -14,12 +14,12 @@ struct LoginTextFields: View {
     @Binding var content: String
     @Binding var errorStatus: String
     @State private var height: CGFloat = 0
-    @State private var isEditing: Bool = false
-//    @FocusState private var isFocused: Bool
-//    private var isEditing: Binding<Bool> {
-//        Binding { isFocused }
-//        set: {isFocused = $0 }
-//    }
+//    @State private var isEditing: Bool = false
+    @FocusState private var isFocused: Bool
+    private var isEditing: Binding<Bool> {
+        Binding { isFocused }
+        set: {isFocused = $0 }
+    }
     
 
     init(_ title: String, content: Binding<String>, errorStatus: Binding<String>, isPassword: Bool = false) {
@@ -39,20 +39,20 @@ struct LoginTextFields: View {
                 .padding()
                 .font(content.isEmpty ? .body : .body.bold())
             
-            TextField("", text: $content) { _ in
-                withAnimation(.default) { isEditing.toggle() }
-            }
-            .modifier(LoginTextFieldModifier(isEditing: $isEditing, errorStatus: $errorStatus, height: $height))
-//            if isPassword {
-//                SecureField("", text: $content)
-//                    .focused($isFocused)
-//                    .modifier(LoginTextFieldModifier(isEditing: isEditing, errorStatus: $errorStatus, height: $height))
-//            } else {
-//                TextField("", text: $content) { _ in
-//                        withAnimation(.default) { isEditing =  }
-//                }
-//                .modifier(LoginTextFieldModifier(isEditing: isEditing, errorStatus: $errorStatus, height: $height))
+//            TextField("", text: $content) { _ in
+//                withAnimation(.default) { isEditing.toggle() }
 //            }
+//            .modifier(LoginTextFieldModifier(isEditing: $isEditing, errorStatus: $errorStatus, height: $height))
+            if isPassword {
+                SecureField("", text: $content)
+                    .focused($isFocused)
+                    .modifier(LoginTextFieldModifier(isEditing: isEditing, errorStatus: $errorStatus, height: $height))
+            } else {
+                TextField("", text: $content) { _ in
+                        withAnimation(.default) { isFocused = !isFocused }
+                }
+                .modifier(LoginTextFieldModifier(isEditing: isEditing, errorStatus: $errorStatus, height: $height))
+            }
         }
         .background {
             Color(.secondarySystemBackground)

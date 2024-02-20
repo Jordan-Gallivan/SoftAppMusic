@@ -28,6 +28,7 @@ enum HTTPRequests {
         if let data {
             request.httpBody = data
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpMethod = "POST"
         }
         
         if let token {

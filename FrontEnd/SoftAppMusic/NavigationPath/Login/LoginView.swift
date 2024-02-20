@@ -12,7 +12,8 @@ import SwiftUI
 struct LoginView: View {
     @Environment(\.modelContext) var dbContext
     @Query var masterSettingsModel: [MasterSettingsModel]
-    @State var userLogin: FetchUserLogin = FetchUserLogin()
+    @ObservedObject var userLogin = FetchUserLogin()
+  
     
     var body: some View {
         VStack {
@@ -22,11 +23,30 @@ struct LoginView: View {
             LoginTextFields("Username", 
                             content: $userLogin.enteredUserName,
                             errorStatus: $userLogin.usernameStatus)
-//            LoginTextFields("Password",
-//                            content: $userLogin.enteredPassword,
-//                            errorStatus: $userLogin.passwordStatus,
-//                            isPassword: true
-//            )
+            .padding()
+            
+            LoginTextFields("Password",
+                            content: $userLogin.enteredPassword,
+                            errorStatus: $userLogin.passwordStatus,
+                            isPassword: true
+            )
+            .padding()
+            Button(action: {
+                Task {
+                    await userLogin.attemptLogin(token: nil)
+                }
+            }, label: {
+                Text("Let's Move")
+            })
+            
+            Text("First time? Click to create a profile.")
+            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                Text("Create User")
+            })
+            
+
         }
     }
+    
+
 }
