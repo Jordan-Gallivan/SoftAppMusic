@@ -19,7 +19,7 @@ public class UserConfig {
                     "no"
             );
 
-            repository.save(johnSmith);
+            //repository.save(johnSmith);
         };
     }
 }
