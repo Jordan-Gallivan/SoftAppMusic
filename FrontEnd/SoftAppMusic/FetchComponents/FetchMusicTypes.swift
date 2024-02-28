@@ -7,10 +7,10 @@
 
 import Foundation
 
-class FetchMusicPreferences: ObservableObject {
+class FetchMusicTypes: ObservableObject {
     
-    @Published var result: AsyncStatus<MusicPreferences> = .empty
-    @Published var musicPreferences: MusicPreferences?
+    @Published var result: AsyncStatus<MusicTypes> = .empty
+    @Published var musicPreferences: MusicTypes?
     let pageName = "Music Preferences"
     
     func fetchEmptyPreferences() async {

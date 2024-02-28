@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MusicPreferences: Codable {
+struct MusicTypes: Codable {
     var decades: [String: Bool]
     var genres: [String: Bool]
 }
