@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(path = "user")
 @RestController
 public class UserController {
 
@@ -21,7 +20,7 @@ public class UserController {
     @GetMapping
     public List<User> getUser() { return userService.getUser(); }
 
-    @PostMapping(path = "create_user_login")
+    @PostMapping(path = "/create_user_login")
     public ResponseEntity<?> createNewUser(@RequestBody User user) {
         try {
             userService.addNewUser(user);
@@ -33,7 +32,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "login")
+    @PostMapping(path = "/login")
     public  ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
