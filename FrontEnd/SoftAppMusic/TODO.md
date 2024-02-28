@@ -11,6 +11,7 @@ o Update API Endpoints
 o implement correct fetch calls:
     o music types (FetchMusicTypes -> line 13)
     o workout types (FetchWorkoutTypes -> line 17)
+    o fetch user login (FetchUserLogin -> Line 72)
 
 Navigation Stack
     o Login View

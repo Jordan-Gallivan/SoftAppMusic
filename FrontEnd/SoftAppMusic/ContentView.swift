@@ -15,10 +15,19 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $appData.viewPath) {
-            if masterSettingsModel.first!.userProfileCreated {
-                LoginView()
-            } else {
-                CreateUserLoginView()
+            Group {
+                if masterSettingsModel.first!.userProfileCreated {
+                    LoginView()
+                } else {
+                    CreateUserLoginView()
+                }
+            }
+            .navigationDestination(for: String.self) { destination in
+                if destination == "user profile create" {
+                    UserProfileView(isCreatingUserProfile: true)
+                } else if destination == "user profile" {
+                    UserProfileView(isCreatingUserProfile: false)
+                }
             }
         }
         .onAppear {
@@ -37,13 +46,7 @@ struct ContentView: View {
                 appData.musicTypes = updatedMusicTypes ?? masterSettingsModel.first!.previousMusicTypes
             }
         }
-        .navigationDestination(for: String.self) { destination in
-            if destination == "user profile create" {
-                UserProfileView(isCreatingUserProfile: true)
-            } else if destination == "user profile" {
-                UserProfileView(isCreatingUserProfile: false)
-            }
-        }
+        
     }
 }
 

@@ -13,7 +13,7 @@ struct LoginView: View {
     @ObservedObject private var userLogin = FetchUserLogin()
     
     
-    // MARK: User Application Seettings
+    /// User Application Seettings
     @EnvironmentObject private var appData: AppData
     @Environment(\.modelContext) var dbContext
     @Query var masterSettingsModel: [MasterSettingsModel]
@@ -24,7 +24,7 @@ struct LoginView: View {
     }
     
     
-    // MARK: username and password status
+    /// username and password status
     private var usernameErrorStatus: Binding<String> {
         Binding {
             switch userLogin.usernameStatus {
@@ -89,10 +89,7 @@ struct LoginView: View {
             }, label: {
                 Text("Let's Move")
             })
-            .padding()
-            .background(StyleConstants.DarkBlue)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
             
             Toggle(isOn: stayLoggedIn) {
                 Text("Stay logged in")
@@ -102,9 +99,6 @@ struct LoginView: View {
             Spacer()
             
             Text("First time? Click to create a profile.")
-//            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: { // MARK: update
-//                Text("Create User")
-//            })
             NavigationLink("Create User") {
                 CreateUserLoginView()
             }

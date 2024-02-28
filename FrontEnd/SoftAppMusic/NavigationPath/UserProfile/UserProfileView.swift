@@ -34,23 +34,42 @@ struct UserProfileView: View {
                             .disabled(true)
                         TextField("First Name", text: $userProfileData.firstName)
                         TextField("Last Name", text: $userProfileData.lastName)
+                        TextField("Age", text: $userProfileData.age)
                         
                         
                     }
+                    
                     Button(action: {
                         makeWorkoutMusicMatches.toggle()
                     }, label: {
                         Text("Update Workout and Music Preferences")
                     })
-                    .padding()
-                    .background(StyleConstants.DarkBlue)
-                    .foregroundColor(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .buttonStyle(
+                        DefaultButtonStyling(buttonColor: Color.clear,
+                                             borderColor: StyleConstants.DarkBlue,
+                                             textColor: StyleConstants.DarkBlue))
+                    Spacer()
+                    
+                    Button(action: {
+                        if isCreatingUserProfile {
+                            // MARK: navigate to app Main Screen
+                        } else {
+                            appData.viewPath.removeLast()
+                        }
+                    }, label: {
+                        Text(isCreatingUserProfile ? "Get Moving" : "Save")
+                    })
+                    .buttonStyle(
+                        DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue,
+                                             borderColor: StyleConstants.DarkBlue,
+                                             textColor: Color.white))
                 }
             case .failure(_):
                 ErrorView(pageName: "User Profile")
             }
+                
         }
+        .navigationBarBackButtonHidden(isCreatingUserProfile)
         .task {
             // check if first time updating user profile
             if isCreatingUserProfile {

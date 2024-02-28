@@ -30,7 +30,7 @@ struct PasswordRequirements: View {
 struct CreateUserLoginView: View {
     @ObservedObject var userLogin = FetchUserLogin()
     
-    // MARK: User Application Seettings
+    /// User Application Seettings
     @EnvironmentObject private var appData: AppData
     @Environment(\.modelContext) private var dbContext
     @Query private var masterSettingsModel: [MasterSettingsModel]
@@ -41,7 +41,7 @@ struct CreateUserLoginView: View {
     }
     
     
-    // MARK: username and password status
+    /// username and password status
     private var usernameErrorStatus: Binding<String> {
         Binding {
             switch userLogin.usernameStatus {
@@ -134,24 +134,30 @@ struct CreateUserLoginView: View {
             
             Button(action: {
                 submissionAttempt = true
+                // validate password requirements satisfied
                 guard eightCharacters && number && specialCharacter && passwordsMatch else {
                     return
                 }
                 Task {
+                    // validate username not in use and create user
+                    let createRequestStatus = await userLogin.createUser()
+                    guard createRequestStatus else {
+                        // MARK: error handling
+                        return
+                    }
+                    
+                    // generate token and login
                     let token = await userLogin.attemptLogin(token: nil)
                     guard let token else { return }
                     
                     appData.currentToken = token
                     appData.currentUserEmail = userLogin.enteredUserName
-                    // MARK: Update navigation link
+                    appData.viewPath.append("user profile create")
                 }
             }, label: {
                 Text("Let's Move")
             })
-            .padding()
-            .background(StyleConstants.DarkBlue)
-            .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
             
 
             

@@ -11,6 +11,7 @@ struct UserProfileData: Codable {
     var email: String = ""
     var firstName: String = ""
     var lastName: String = ""
+    var age: String = ""
     var spotifyConsent: Bool = false
     var workoutMusicMatches: [String: [String]] = [:]
     
