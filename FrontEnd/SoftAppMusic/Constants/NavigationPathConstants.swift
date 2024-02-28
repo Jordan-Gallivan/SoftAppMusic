@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum NavigationPathConstants {
+    static let loginPage = "Login Page"
+    static let createLoginPage = "Create Login Page"
+}

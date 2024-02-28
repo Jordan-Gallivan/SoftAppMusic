@@ -16,17 +16,25 @@ enum LoginStatus {
     case error(Error)
 }
 
+enum ErrorStates {
+    case empty
+    case valid
+    case invalid
+    case tooManyAttempts
+    case passwordsDoNotMatch
+}
+
 
 @MainActor
 class FetchUserLogin: ObservableObject {
    
-    private enum UsernameStatus {
+    enum UsernameStatus {
         static let ValidUsername = ""
         static let NoUsername = "Please enter a username"
         static let InvalidUsername = "Username not recognized"
     }
 
-    private enum PasswordStatus {
+    enum PasswordStatus {
         static let ValidPassword = ""
         static let NoPassword = "Please enter a password"
         static let PasswordDoesNotMatchUsername = "Password does not match username"
@@ -36,10 +44,12 @@ class FetchUserLogin: ObservableObject {
     @Published var status: LoginStatus = .empty
     @Published var enteredUserName = ""
     @Published var enteredPassword = ""
-    @Published var usernameStatus: String = ""
-    @Published var passwordStatus: String = ""
+    @Published var usernameStatus: ErrorStates = .valid
+    @Published var passwordStatus: ErrorStates = .valid
     
     private var attempts = 0
+    @Published var usernamePreviouslyEmpty = false
+    private var passwordPreviouslyEmpty = false
     
     /// structs to decode/encode JSON
     private struct UsernameAndPassword: Encodable {
@@ -58,21 +68,23 @@ class FetchUserLogin: ObservableObject {
     ///
     /// - Returns: JWT token String if login is valid and class variable status is set to .success.
     /// Otherwise class variable status is set to .error or .failure and nil is returned.
-    @discardableResult
     public func attemptLogin(token: String?) async -> String? {
+
         // validate number of attempted logins
         guard attempts <= 3 else {
-            passwordStatus = PasswordStatus.TooManyAttempts
+            passwordStatus = .tooManyAttempts
             return nil
         }
         
         // validate user entered a username and password
         guard enteredUserName.count > 0 && enteredPassword.count > 0 else {
             if enteredUserName.count == 0 {
-                usernameStatus = UsernameStatus.NoUsername
+                usernamePreviouslyEmpty = true
+                usernameStatus = .empty
             }
             if enteredPassword.count == 0 {
-                passwordStatus = PasswordStatus.NoPassword
+                passwordPreviouslyEmpty = true
+                passwordStatus = .empty
             }
             return nil
         }
@@ -120,13 +132,28 @@ class FetchUserLogin: ObservableObject {
     private func handleInvalidUserNamePassword(_ response: InvalidUsernamePasswordResponse) {
         if !response.username {
             attempts = 0
-            usernameStatus = UsernameStatus.InvalidUsername
-            passwordStatus = PasswordStatus.ValidPassword
+            usernameStatus = .invalid
+            passwordStatus = .valid
             return
         }
-        usernameStatus = UsernameStatus.ValidUsername
-        passwordStatus = PasswordStatus.PasswordDoesNotMatchUsername
+        usernameStatus = .valid
+        passwordStatus = .invalid
         attempts += 1
     }
     
+    func clearUsernameStatus() {
+        usernameStatus = .valid
+    }
+    
+//    func setNoUsername() {
+//        usernameStatus = UsernameStatus.NoUsername
+//    }
+    
+//    func clearPasswordStatus() {
+//        if !enteredPassword.isEmpty {
+//            passwordStatus = PasswordStatus.ValidPassword
+//        } else if passwordPreviouslyEmpty {
+//            passwordStatus = PasswordStatus.NoPassword
+//        }
+//    }
 }

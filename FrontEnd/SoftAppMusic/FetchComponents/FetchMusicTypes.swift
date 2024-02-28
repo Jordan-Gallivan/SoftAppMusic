@@ -7,39 +7,38 @@
 
 import Foundation
 
-class FetchMusicTypes: ObservableObject {
+enum FetchMusicTypes {
     
-    @Published var result: AsyncStatus<MusicTypes> = .empty
-    @Published var musicPreferences: MusicTypes?
-    let pageName = "Music Preferences"
-    
-    func fetchEmptyPreferences() async {
-        // MARK: update with GET call
+    static func fetchUpdatedMusicTypes() async -> MusicTypes? {
+        return MusicTypes(decades: ["1980s", "1990s", "2000s", "2010s", "2020s"], genres: ["rock", "pop", "rap", "punk"])
         do {
-            result = .inProgress(page: pageName)
-            result = .success(musicPreferences!)
+            let (data, urlResponse) = try await HTTPRequests.GET(urlString: "\(APIConstants.API_URL)/\(APIConstants.MUSIC_TYPES)", token: nil)
+            guard let httpResponse = urlResponse as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return nil
+            }
+            
+            let updatedMusicTypes = try JSONDecoder().decode(MusicTypes.self, from: data)
+            return updatedMusicTypes
+            
         } catch {
-            result = .failure(error)
+            NSLog("Error Fetching music types.  \(error.localizedDescription)")
+            return nil
         }
     }
     
-    func fetchUserPreferences(userEmail: String) async {
+    static func fetchUserPreferences(userEmail: String) async {
         // MARK: update with GET call
         do {
-            result = .inProgress(page: pageName)
-            result = .success(musicPreferences!)
+            
         } catch {
-            result = .failure(error)
         }
     }
     
-    func updateUserPreferences() {
+    static func updateUserPreferences() {
         // MARK: update with PUT Call
         do {
-            result = .inProgress(page: pageName)
-            result = .success(musicPreferences!)
+            
         } catch {
-            result = .failure(error)
         }
     }
 }

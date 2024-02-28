@@ -12,6 +12,6 @@ struct MusicTypesView: View {
     
     
     var body: some View {
-        
+        Text("Placeholder")
     }
 }

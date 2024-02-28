@@ -8,6 +8,6 @@
 import Foundation
 
 struct MusicTypes: Codable {
-    var decades: [String: Bool]
-    var genres: [String: Bool]
+    var decades: [String]
+    var genres: [String]
 }

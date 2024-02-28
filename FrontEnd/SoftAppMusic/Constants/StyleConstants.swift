@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
+enum StyleConstants {
+    static let DarkBlue = Color(red: 16/255, green: 36/255, blue: 56/255)
+}

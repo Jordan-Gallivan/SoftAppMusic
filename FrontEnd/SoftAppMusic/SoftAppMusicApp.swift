@@ -10,10 +10,12 @@ import SwiftData
 
 @main
 struct SoftAppMusicApp: App {
-
+    @StateObject private var appData = AppData()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appData)
         }
         .modelContainer(for: [MasterSettingsModel.self])
     }
