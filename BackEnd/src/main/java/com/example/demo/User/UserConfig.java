@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.Preference.Preference;
+
 @Configuration
 public class UserConfig {
 
@@ -16,9 +18,9 @@ public class UserConfig {
                     "smith",
                     "test@email.com",
                     "password",
-                    "no"
+                    "no",
+                    "{\"workouts\": [\"HIIT\", \"Weight Lifting\", \"Powerlifting\", \"Sprints\", \"Bodyweight Exercises\", \"Distance Running\"], \"decades\": [\"90s\", \"80s\", \"70s\", \"60s\", \"2010s\", \"2000s\"], \"genres\": [\"Funk\", \"Techno\", \"Rap\", \"Rock\", \"Grunge\", \"Pop\"]}"
             );
-
             //repository.save(johnSmith);
         };
     }
