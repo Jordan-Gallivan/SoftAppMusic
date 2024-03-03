@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(path = "/")
 @RestController
 public class UserController {
 
@@ -23,7 +22,7 @@ public class UserController {
     @GetMapping
     public List<User> getUser() { return userService.getUser(); }
 
-    @PostMapping(path = "user/create_user_login")
+    @PostMapping(path = "/create_user_login")
     public ResponseEntity<?> createNewUser(@RequestBody User user) {
         try {
             userService.addNewUser(user);
@@ -35,7 +34,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "user/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
