@@ -19,7 +19,7 @@ public class UserConfig {
                     "test@email.com",
                     "password",
                     "no",
-                    "{\"Long Run High\" : [\"Rock\", \"Rap\", \"Pop\"], \"Long Run Mid\" : [\"Rock\"], \"Long Run Low\" : [\"Rap\", \"Pop\", \"Electro\"], \"Sprint High\" : [\"Rock\", \"Rap\", \"Electro\"], \"Sprint Low\" : [\"Electro\"], \"HIIT High\" : [\"Rock\", \"Rap\", \"Pop\", \"Electro\"], \"HITT Low\" : [\"Rap\", \"Electro\"]}"
+                    "{\"Long Run\" : [\"Rock\", \"Rap\", \"Pop\"], \"Sprint\" : [\"Rock\", \"Rap\", \"Electro\"], \"HITT\" : [\"Rap\", \"Electro\"]}"
             );
             repository.save(johnSmith);
         };

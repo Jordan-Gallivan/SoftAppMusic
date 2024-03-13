@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 
 public class Preference {
 	private static final List<String> musicTypes = Arrays.asList("Rock", "Rap", "Pop", "Electro");		
-	private static final List<String> workoutTypes = Arrays.asList("Long Run High", "Long Run Mid", "Long Run Low", "Sprint High", "Sprint Low", "HIIT High", "HIIT Low");		
+	private static final List<String> workoutTypes = Arrays.asList("Long Run", "Sprint", "HIIT");		
 
 	public Preference() { }
 	
