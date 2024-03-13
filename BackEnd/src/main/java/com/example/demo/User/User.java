@@ -2,10 +2,7 @@ package com.example.demo.User;
 
 import java.util.List;
 import java.util.Map;
-
-import com.example.demo.Preference.*;
 import com.google.gson.Gson;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -22,11 +19,10 @@ public class User {
 	private String spotifyConsent;
 	
 	@Lob
-	// Better? option is to have separate table for user preferences instead of serializing as JSON
 	private String userPreferenceSettingsJson;
 	@Transient
+	// Key is workout type, value is list of music genres associated with workout type.
 	private Map<String, List<String>> userPreferences;
-	//private Map<String, Map<String, Boolean>> userPreferenceSettings;
 
 	@SuppressWarnings("unchecked")
 	public User(String username, String firstName, String lastName, String userEmail, String password,

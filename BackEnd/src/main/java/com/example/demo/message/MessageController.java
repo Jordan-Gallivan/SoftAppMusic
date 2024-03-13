@@ -19,17 +19,14 @@ public class MessageController {
 
     // New @GetMapping for "/music_type"
     @GetMapping(path = "/music_type")
-    public Map<String, List<String>> getMusicType() {
-    	Map<String, List<String>> musicType = Preference.getDefaultPreferences();
-    	musicType.remove("workouts");
-
-        return musicType;
+    public List<String> getMusicType() {
+        return Preference.getMusicType();
     }
 
     // New @GetMapping for "/workout_type"
     @GetMapping(path = "/workout_type")
     public List<String> getWorkoutType() {
-        return Preference.getDefaultPreferences().get("workouts");
+        return Preference.getWorkoutType();
     }
 }
 

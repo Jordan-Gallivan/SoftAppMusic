@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.Preference.Preference;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,40 +38,62 @@ public class UserService {
     
     @SuppressWarnings("unchecked")
 	@Transactional
-    public void updateUser(String username, String userPreferenceSettingsJson) {
+    public void updateUser(String username, String updatedUserInfo) {
+    	// use this to update non-preference related settings, such as spotifyConsent, email, etc,.
+    	return;
+    }
+    
+    @SuppressWarnings("unchecked")
+	@Transactional
+    public void updateUserMusicPreferences(String username, String userPreferenceSettingsJson) {
     	Optional<User> userOptional = userRepository.findUserByUsername(username);
         if(!userOptional.isPresent()) {
             throw new IllegalStateException("Attempting to update User which does not exist");
         }
+        
         Gson gson = new Gson();
         User user = userOptional.get();
-        Map<String, List<String>> providedUserPreferences;
-        Map<String, List<String>> validUserPreferences = new HashMap<String, List<String>>();
-        Map<String, List<String>> existingUserPreferences = gson.fromJson(userPreferenceSettingsJson, Map.class);
-        List<String> existingUserWorkoutPreferences = existingUserPreferences.get("workouts");
+        Map<String, List<String>> userPreferences = null;
+        
+        // try/catch to verify JSON is in proper format
         try {
-        	providedUserPreferences = gson.fromJson(userPreferenceSettingsJson, Map.class);
-        	if (providedUserPreferences == null) {
-        		throw new IllegalStateException("Improper or empty JSON provided");
-        	} else {
-        		// only update music preferences if decades and genres lists were provided
-        		List<String> decadePreferences = providedUserPreferences.get("decades");
-        		List<String> genrePreferences = providedUserPreferences.get("genres");
-        		if (decadePreferences != null && genrePreferences != null) {
-        			validUserPreferences.put("decades", decadePreferences);
-        			validUserPreferences.put("genres", genrePreferences);
-        			
-        			// don't overwrite workout preferences when setting music preferences
-        			if (existingUserWorkoutPreferences != null) {
-        				validUserPreferences.put("workouts",  existingUserWorkoutPreferences);
-        			}
-        		}
-        	}
-        } catch (IllegalStateException e){
-        	throw new IllegalStateException("Improper or empty JSON provided");
+            userPreferences = gson.fromJson(userPreferenceSettingsJson, Map.class);
+    	} catch (JsonSyntaxException e) {
+        	throw new IllegalStateException("Invalid JSON format provided.");
+    	}
+        
+        // verify only allowed music and workout types are provided with JSON
+        try {
+            List<String> workoutType = Preference.getWorkoutType();
+            List<String> musicType = Preference.getMusicType();
+            List<String> musicPreferenceList;
+            for (Map.Entry<String, List<String>> workoutMusicPreference : userPreferences.entrySet()) {
+               if (!workoutType.contains(workoutMusicPreference.getKey())) {
+            	   throw new Exception("Invalid workout types provided.");
+               }
+               try {
+            	   musicPreferenceList = workoutMusicPreference.getValue();
+               } catch (Exception e) {
+            	   throw new Exception("Format does not conform to HashMap<String, List<String>>.");
+               }
+               
+        	   for (String musicPreference : musicPreferenceList) {
+        		   if (!musicType.contains(musicPreference)) {
+        			   throw new Exception("Invalid music types provided.");
+        		   }
+        	   }
+
+           }
+        } catch (Exception e) {
+        	throw new IllegalStateException(e.getMessage());
         }
         
-		user.setUserPreferences(validUserPreferences);
+		// Should we allow empty preference JSON?
+    	if (userPreferences == null || userPreferences.size() == 0) {
+    		throw new IllegalStateException("Provided JSON Array is empty.");
+    	}
+    	
+		user.setUserPreferences(userPreferences);
 		user.setUserPreferenceSettingsJson(gson.toJson(user.getUserPreferences(), Map.class));
     }
 

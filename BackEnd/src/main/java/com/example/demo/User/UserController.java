@@ -46,13 +46,11 @@ public class UserController {
     
 	@Transactional(readOnly = true)
     @GetMapping(path = "user_profile/{username}/music_preferences")
+    @SuppressWarnings("unchecked")
     public ResponseEntity<?> getUserMusicPreferences(@PathVariable String username) {
     	try {
 			User user = userService.getUserByUsername(username);
-
-		    @SuppressWarnings("unchecked")
 			Map<String, Map<String, Boolean>> userPreferences = new Gson().fromJson(user.getUserPreferenceSettingsJson(), Map.class);
-			userPreferences.remove("workouts");
 			
 			return ResponseEntity.ok(userPreferences);
     	} catch (IllegalStateException e) {
@@ -61,9 +59,9 @@ public class UserController {
     }
     
     @PostMapping(path = "user_profile/{username}/music_preferences")
-    public  ResponseEntity<?>  updateUser(@PathVariable String username, @RequestBody String userPreferenceSettingsJson) {
+    public  ResponseEntity<?>  updateUserMusicPreferences(@PathVariable String username, @RequestBody String userPreferenceSettingsJson) {
     	try {
-        	userService.updateUser(username, userPreferenceSettingsJson);
+        	userService.updateUserMusicPreferences(username, userPreferenceSettingsJson);
         	return ResponseEntity.ok("Updated user preferences");
     	} catch (IllegalStateException e) {
     		return ResponseEntity

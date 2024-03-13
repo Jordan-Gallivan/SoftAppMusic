@@ -19,9 +19,9 @@ public class UserConfig {
                     "test@email.com",
                     "password",
                     "no",
-                    "{\"workouts\": [\"HIIT\", \"Weight Lifting\", \"Powerlifting\", \"Sprints\", \"Bodyweight Exercises\", \"Distance Running\"], \"decades\": [\"90s\", \"80s\", \"70s\", \"60s\", \"2010s\", \"2000s\"], \"genres\": [\"Funk\", \"Techno\", \"Rap\", \"Rock\", \"Grunge\", \"Pop\"]}"
+                    "{\"Long Run High\" : [\"Rock\", \"Rap\", \"Pop\"], \"Long Run Mid\" : [\"Rock\"], \"Long Run Low\" : [\"Rap\", \"Pop\", \"Electro\"], \"Sprint High\" : [\"Rock\", \"Rap\", \"Electro\"], \"Sprint Low\" : [\"Electro\"], \"HIIT High\" : [\"Rock\", \"Rap\", \"Pop\", \"Electro\"], \"HITT Low\" : [\"Rap\", \"Electro\"]}"
             );
-            //repository.save(johnSmith);
+            repository.save(johnSmith);
         };
     }
 }
