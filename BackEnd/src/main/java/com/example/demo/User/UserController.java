@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,27 @@ public class UserController {
 			Map<String, Map<String, Boolean>> userPreferences = new Gson().fromJson(user.getUserPreferenceSettingsJson(), Map.class);
 			
 			return ResponseEntity.ok(userPreferences);
+    	} catch (IllegalStateException e) {
+    	    return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
+		}
+    }
+	
+	@Transactional(readOnly = true)
+    @GetMapping(path = "user_profile/{username}")
+    @SuppressWarnings("unchecked")
+    public ResponseEntity<?> getUserProperties(@PathVariable String username) {
+    	try {
+			User user = userService.getUserByUsername(username);
+			HashMap<String, String> userProperties = new HashMap<>();
+			userProperties.put("username", user.getUsername());
+			userProperties.put("firstName", user.getFirstName());
+			userProperties.put("lastName", user.getLastName());
+			userProperties.put("userEmail", user.getUserEmail());
+			userProperties.put("password", "********");
+			userProperties.put("age", String.valueOf(user.getAge()));
+			userProperties.put("spotifyConsent", user.getSpotifyConsent());
+			
+			return ResponseEntity.ok(userProperties);
     	} catch (IllegalStateException e) {
     	    return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
 		}

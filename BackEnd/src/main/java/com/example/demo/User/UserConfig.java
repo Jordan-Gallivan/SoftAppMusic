@@ -18,6 +18,7 @@ public class UserConfig {
                     "smith",
                     "test@email.com",
                     "password",
+                    74,
                     "no",
                     "{\"Long Run\" : [\"Rock\", \"Rap\", \"Pop\"], \"Sprint\" : [\"Rock\", \"Rap\", \"Electro\"], \"HITT\" : [\"Rap\", \"Electro\"]}"
             );

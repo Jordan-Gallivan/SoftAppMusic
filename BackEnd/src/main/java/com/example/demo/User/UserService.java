@@ -9,7 +9,6 @@ import com.example.demo.Preference.Preference;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

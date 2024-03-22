@@ -16,6 +16,7 @@ public class User {
 	private String lastName;
 	private String userEmail;
 	private String password;
+	private int age;
 	private String spotifyConsent;
 	
 	@Lob
@@ -26,12 +27,13 @@ public class User {
 
 	@SuppressWarnings("unchecked")
 	public User(String username, String firstName, String lastName, String userEmail, String password,
-			String spotifyConsent, String userPreferenceSettingsJson) {
+			int age, String spotifyConsent, String userPreferenceSettingsJson) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userEmail = userEmail;
 		this.password = password;
+		this.age = age;
 		this.spotifyConsent = spotifyConsent;
 		// should parse and validate JSON before setting it
 		this.userPreferenceSettingsJson = userPreferenceSettingsJson;
@@ -66,6 +68,14 @@ public class User {
 		this.spotifyConsent = spotifyConsent;
 	}
 
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
