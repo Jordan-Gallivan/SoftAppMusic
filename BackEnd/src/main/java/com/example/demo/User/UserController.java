@@ -62,12 +62,10 @@ public class UserController {
 	
 	@Transactional(readOnly = true)
     @GetMapping(path = "user_profile/{username}")
-    @SuppressWarnings("unchecked")
     public ResponseEntity<?> getUserProperties(@PathVariable String username) {
     	try {
 			User user = userService.getUserByUsername(username);
 			HashMap<String, String> userProperties = new HashMap<>();
-			userProperties.put("username", user.getUsername());
 			userProperties.put("firstName", user.getFirstName());
 			userProperties.put("lastName", user.getLastName());
 			userProperties.put("userEmail", user.getUserEmail());
