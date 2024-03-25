@@ -18,6 +18,8 @@ public class User {
 	private String password;
 	private int age;
 	private String spotifyConsent;
+
+	@Lob
 	private String userPreferenceSettingsJson;
 	@Transient
 	// Key is workout type, value is list of music genres associated with workout type.
