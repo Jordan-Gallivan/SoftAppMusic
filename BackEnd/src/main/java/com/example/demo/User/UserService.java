@@ -69,9 +69,9 @@ public class UserService {
                 case "age":
                     // Make sure to handle NumberFormatException
                     try {
-                        user.setAge(Integer.parseInt((String) value));
+                        user.setAge(Integer.parseInt(value);
                     } catch (NumberFormatException e) {
-                        throw new IllegalStateException("Invalid age format provided.");
+                        throw new IllegalStateException("Invalid age format provided."  + value);
                     }
                     break;
                 case "spotifyConsent":
