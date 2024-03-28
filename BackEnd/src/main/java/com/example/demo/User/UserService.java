@@ -69,7 +69,7 @@ public class UserService {
                 case "age":
                     // Make sure to handle NumberFormatException
                     try {
-                        user.setAge(Integer.parseInt(value);
+                        user.setAge(Integer.parseInt((String) value));
                     } catch (NumberFormatException e) {
                         throw new IllegalStateException("Invalid age format provided."  + value);
                     }
