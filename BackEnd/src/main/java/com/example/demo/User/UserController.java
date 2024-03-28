@@ -91,7 +91,7 @@ public class UserController {
             return ResponseEntity.ok("User profile updated successfully");
 
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist || " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request");
         }
