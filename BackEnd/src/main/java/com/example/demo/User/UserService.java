@@ -36,11 +36,55 @@ public class UserService {
     }
     
     @SuppressWarnings("unchecked")
-	@Transactional
+    @Transactional
     public void updateUser(String username, String updatedUserInfo) {
-    	// use this to update non-preference related settings, such as spotifyConsent, email, etc,.
-    	return;
+        Optional<User> userOptional = userRepository.findUserByUsername(username);
+        if(!userOptional.isPresent()) {
+            throw new IllegalStateException("Attempting to update User which does not exist");
+        }
+
+        User user = userOptional.get();
+        Map<String, Object> updatedInfo;
+
+        // try/catch to verify JSON is in proper format
+        try {
+            Gson gson = new Gson();
+            updatedInfo = gson.fromJson(updatedUserInfo, Map.class);
+        } catch (JsonSyntaxException e) {
+            throw new IllegalStateException("Invalid JSON format provided.");
+        }
+
+        // Now apply the updates to the user object
+        updatedInfo.forEach((property, value) -> {
+            switch (property) {
+                case "firstName":
+                    user.setFirstName((String) value);
+                    break;
+                case "lastName":
+                    user.setLastName((String) value);
+                    break;
+                case "userEmail":
+                    user.setUserEmail((String) value);
+                    break;
+                case "age":
+                    // Make sure to handle NumberFormatException
+                    try {
+                        user.setAge(Integer.parseInt((String) value));
+                    } catch (NumberFormatException e) {
+                        throw new IllegalStateException("Invalid age format provided.");
+                    }
+                    break;
+                case "spotifyConsent":
+                    user.setSpotifyConsent((String) value);
+                    break;
+                // Add other cases for all properties you expect to update
+            }
+        });
+
+        // Save the updated user object back to the database
+        userRepository.save(user);
     }
+
     
     @SuppressWarnings("unchecked")
 	@Transactional

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,8 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
-            return ResponseEntity.ok("{ token : authenticated }");
+            Map<String, String> response = Collections.singletonMap("token", "authenticated");
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
@@ -66,9 +68,9 @@ public class UserController {
     	try {
 			User user = userService.getUserByUsername(username);
 			HashMap<String, String> userProperties = new HashMap<>();
+            userProperties.put("userEmail", user.getUserEmail());
 			userProperties.put("firstName", user.getFirstName());
 			userProperties.put("lastName", user.getLastName());
-			userProperties.put("userEmail", user.getUserEmail());
 			userProperties.put("password", "********");
 			userProperties.put("age", String.valueOf(user.getAge()));
 			userProperties.put("spotifyConsent", user.getSpotifyConsent());
@@ -77,6 +79,22 @@ public class UserController {
     	} catch (IllegalStateException e) {
     	    return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
 		}
+    }
+
+    @PostMapping(path = "user_profile/{username}")
+    public ResponseEntity<?> updateUserProperties(@PathVariable String username, @RequestBody String updates) {
+        try {
+            // persist changes using userService
+            userService.updateUser(username, updates);
+
+            // confirmation message
+            return ResponseEntity.ok("User profile updated successfully");
+
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request");
+        }
     }
     
     @PostMapping(path = "user_profile/{username}/music_preferences")
