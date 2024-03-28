@@ -28,7 +28,7 @@ public class WorkoutController {
         this.thresholdStorage = thresholdStorage;
     }
 
-    @PostMapping("/feelingToday/{username}")
+    @PostMapping("/InitiateWorkout/{username}")
     public ResponseEntity<String> updateUserPreferences(@PathVariable String username, @RequestBody String[] preferences) {
         if (preferences.length != 2) {
             return ResponseEntity.badRequest().body("Invalid preferences array. It should contain exactly two elements.");

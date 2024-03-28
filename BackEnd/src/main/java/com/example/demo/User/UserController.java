@@ -40,7 +40,7 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
-            return ResponseEntity.ok("authenticated");
+            return ResponseEntity.ok("{ token : authenticated }");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
