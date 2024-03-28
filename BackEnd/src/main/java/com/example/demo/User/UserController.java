@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -67,7 +64,7 @@ public class UserController {
     public ResponseEntity<?> getUserProperties(@PathVariable String username) {
     	try {
 			User user = userService.getUserByUsername(username);
-			HashMap<String, String> userProperties = new HashMap<>();
+			LinkedHashMap<String, String> userProperties = new LinkedHashMap<>();
             userProperties.put("userEmail", user.getUserEmail());
 			userProperties.put("firstName", user.getFirstName());
 			userProperties.put("lastName", user.getLastName());
