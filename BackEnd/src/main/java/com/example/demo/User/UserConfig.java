@@ -20,7 +20,7 @@ public class UserConfig {
                     "password",
                     74,
                     "no",
-                    "{\"Long Run\" : [\"Rock\", \"Rap\", \"Pop\"], \"Sprint\" : [\"Rock\", \"Rap\", \"Electro\"], \"HITT\" : [\"Rap\", \"Electro\"]}"
+                    "{}"
             );
             repository.save(johnSmith);
         };

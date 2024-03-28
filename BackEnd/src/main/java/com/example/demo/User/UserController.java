@@ -71,7 +71,6 @@ public class UserController {
             userProperties.put("userEmail", user.getUserEmail());
 			userProperties.put("firstName", user.getFirstName());
 			userProperties.put("lastName", user.getLastName());
-			userProperties.put("password", "********");
 			userProperties.put("age", String.valueOf(user.getAge()));
 			userProperties.put("spotifyConsent", user.getSpotifyConsent());
 			
@@ -83,6 +82,7 @@ public class UserController {
 
     @PostMapping(path = "user_profile/{username}")
     public ResponseEntity<?> updateUserProperties(@PathVariable String username, @RequestBody String updates) {
+        System.out.println(username);
         try {
             // persist changes using userService
             userService.updateUser(username, updates);
