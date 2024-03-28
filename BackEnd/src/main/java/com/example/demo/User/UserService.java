@@ -39,14 +39,13 @@ public class UserService {
     @Transactional
     public void updateUser(String username, String updatedUserInfo) {
         Optional<User> userOptional = userRepository.findUserByUsername(username);
-        if(!userOptional.isPresent()) {
+        if (!userOptional.isPresent()) {
             throw new IllegalStateException("Attempting to update User which does not exist");
         }
 
         User user = userOptional.get();
         Map<String, Object> updatedInfo;
 
-        // try/catch to verify JSON is in proper format
         try {
             Gson gson = new Gson();
             updatedInfo = gson.fromJson(updatedUserInfo, Map.class);
@@ -68,29 +67,25 @@ public class UserService {
                     break;
                 case "age":
                     try {
-                        // Check if the value is already a Number
-                        if (value instanceof Number) {
-                            user.setAge(((Number) value).intValue());
-                        } else {
-                            // Try parsing the string to an integer
-                            user.setAge(Integer.parseInt(value.toString()));
-                        }
-                    } catch (NumberFormatException e) {
+                        user.setAge(((Number) value).intValue());
+                    } catch (ClassCastException e) {
                         throw new IllegalStateException("Invalid age format provided: " + value);
                     }
                     break;
                 case "spotifyConsent":
-                    user.setSpotifyConsent((String) value);
+                    // Directly store the consent as a string
+                    user.setSpotifyConsent(value.toString());
                     break;
-                // Add other cases for all properties you expect to update
+                // Add other cases as necessary
             }
         });
 
-        // Save the updated user object back to the database
+        // Save the updated user object
         userRepository.save(user);
     }
 
-    
+
+
     @SuppressWarnings("unchecked")
 	@Transactional
     public void updateUserMusicPreferences(String username, String userPreferenceSettingsJson) {
