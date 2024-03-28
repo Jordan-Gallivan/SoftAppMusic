@@ -1,6 +1,5 @@
 package com.example.demo.User;
 
-import com.example.demo.JWT.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private JwtUtil jwtUtil;
 
     @Autowired
     public UserController(UserService usersService) {
@@ -42,8 +40,7 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
-            final String token = jwtUtil.generateToken(user.getUsername());
-            return ResponseEntity.ok(Map.of("token", token));
+            return ResponseEntity.ok("authenticated");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
