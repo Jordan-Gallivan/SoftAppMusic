@@ -29,7 +29,7 @@ public class UserService {
     
     public User getUserByUsername(String username) {
     	Optional<User> userOptional = userRepository.findUserByUsername(username);
-    	if(!userOptional.isPresent()) {
+    	if(userOptional.isEmpty()) {
     		throw new IllegalStateException("Find user exception: User does not exist");
         }
 		return userOptional.get();
@@ -46,7 +46,7 @@ public class UserService {
 	@Transactional
     public void updateUserMusicPreferences(String username, String userPreferenceSettingsJson) {
     	Optional<User> userOptional = userRepository.findUserByUsername(username);
-        if(!userOptional.isPresent()) {
+        if(userOptional.isEmpty()) {
             throw new IllegalStateException("Attempting to update User which does not exist");
         }
         
