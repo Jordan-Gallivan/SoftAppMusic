@@ -71,7 +71,6 @@ public class UserController {
             userProperties.put("userEmail", user.getUserEmail());
 			userProperties.put("firstName", user.getFirstName());
 			userProperties.put("lastName", user.getLastName());
-			userProperties.put("password", "********");
 			userProperties.put("age", String.valueOf(user.getAge()));
 			userProperties.put("spotifyConsent", user.getSpotifyConsent());
 			
