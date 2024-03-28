@@ -67,11 +67,16 @@ public class UserService {
                     user.setUserEmail((String) value);
                     break;
                 case "age":
-                    // Make sure to handle NumberFormatException
                     try {
-                        user.setAge(Integer.parseInt((String) value));
+                        // Check if the value is already a Number
+                        if (value instanceof Number) {
+                            user.setAge(((Number) value).intValue());
+                        } else {
+                            // Try parsing the string to an integer
+                            user.setAge(Integer.parseInt(value.toString()));
+                        }
                     } catch (NumberFormatException e) {
-                        throw new IllegalStateException("Invalid age format provided."  + value);
+                        throw new IllegalStateException("Invalid age format provided: " + value);
                     }
                     break;
                 case "spotifyConsent":
