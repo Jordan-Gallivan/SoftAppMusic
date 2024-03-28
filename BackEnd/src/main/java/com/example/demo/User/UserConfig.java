@@ -19,7 +19,7 @@ public class UserConfig {
                     "test@email.com",
                     "password",
                     74,
-                    "no",
+                    true,
                     "{}"
             );
             repository.save(johnSmith);

@@ -74,7 +74,7 @@ public class UserService {
                     break;
                 case "spotifyConsent":
                     // Directly store the consent as a string
-                    user.setSpotifyConsent(value.toString());
+                    user.setSpotifyConsent((Boolean) value);
                     break;
                 // Add other cases as necessary
             }

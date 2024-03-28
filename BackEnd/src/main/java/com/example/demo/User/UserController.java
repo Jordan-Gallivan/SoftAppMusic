@@ -61,21 +61,21 @@ public class UserController {
 	
 	@Transactional(readOnly = true)
     @GetMapping(path = "user_profile/{username}")
-    public ResponseEntity<?> getUserProperties(@PathVariable String username) {
-    	try {
-			User user = userService.getUserByUsername(username);
-			LinkedHashMap<String, String> userProperties = new LinkedHashMap<>();
-            userProperties.put("userEmail", user.getUserEmail());
-			userProperties.put("firstName", user.getFirstName());
-			userProperties.put("lastName", user.getLastName());
-			userProperties.put("age", String.valueOf(user.getAge()));
-			userProperties.put("spotifyConsent", user.getSpotifyConsent());
-			
-			return ResponseEntity.ok(userProperties);
-    	} catch (IllegalStateException e) {
-    	    return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
-		}
-    }
+//    public ResponseEntity<?> getUserProperties(@PathVariable String username) {
+//    	try {
+//			User user = userService.getUserByUsername(username);
+//			LinkedHashMap<String, String> userProperties = new LinkedHashMap<>();
+//            userProperties.put("userEmail", user.getUserEmail());
+//			userProperties.put("firstName", user.getFirstName());
+//			userProperties.put("lastName", user.getLastName());
+//			userProperties.put("age", String.valueOf(user.getAge()));
+//			userProperties.put("spotifyConsent", user.getSpotifyConsent());
+//
+//			return ResponseEntity.ok(userProperties);
+//    	} catch (IllegalStateException e) {
+//    	    return ResponseEntity.status(HttpStatus.CONFLICT).body("User does not exist");
+//		}
+//    }
 
     @PostMapping(path = "user_profile/{username}")
     public ResponseEntity<?> updateUserProperties(@PathVariable String username, @RequestBody String updates) {

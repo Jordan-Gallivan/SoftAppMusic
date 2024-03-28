@@ -17,7 +17,7 @@ public class User {
 	private String userEmail;
 	private String password;
 	private int age;
-	private String spotifyConsent;
+	private Boolean spotifyConsent;
 
 	@Lob
 	private String userPreferenceSettingsJson;
@@ -27,7 +27,7 @@ public class User {
 
 	@SuppressWarnings("unchecked")
 	public User(String username, String firstName, String lastName, String userEmail, String password,
-			int age, String spotifyConsent, String userPreferenceSettingsJson) {
+			int age, Boolean spotifyConsent, String userPreferenceSettingsJson) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,11 +60,11 @@ public class User {
 		this.userPreferenceSettingsJson = userPreferenceSettingsJson;
 	}
 
-	public String getSpotifyConsent() {
+	public Boolean getSpotifyConsent() {
 		return spotifyConsent;
 	}
 
-	public void setSpotifyConsent(String spotifyConsent) {
+	public void setSpotifyConsent(Boolean spotifyConsent) {
 		this.spotifyConsent = spotifyConsent;
 	}
 
@@ -119,4 +119,5 @@ public class User {
 	public int calculateMaxHeartRate() {
 		return 220 - this.age;
 	}
+
 }
