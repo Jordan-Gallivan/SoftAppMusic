@@ -13,6 +13,8 @@ struct PasswordRequirements: View {
     var requirement: String
     @Binding var requirementSatisfied: Bool
     @Binding var submissionAttempt: Bool
+    @Environment(\.modelContext) var dbContext
+    @Query var masterSettingsModel: [MasterSettingsModel]
     
     var body: some View {
         HStack {
@@ -22,7 +24,6 @@ struct PasswordRequirements: View {
             Text(requirement)
                 .foregroundStyle(submissionAttempt && !requirementSatisfied ? .red : Color.primary)
         }
-        
     }
 }
 
@@ -142,31 +143,7 @@ struct CreateUserLoginView: View {
             .padding()
             
             Button(action: {
-                submissionAttempt = true
-                
-                // validate password requirements satisfied
-                guard eightCharacters && number && specialCharacter && passwordsMatch else {
-                    return
-                }
-                Task {
-                    // validate username not in use and create user
-                    let createRequestStatus = await userLogin.createUser()
-                    guard createRequestStatus else {
-                        NSLog("Invalid create request")
-                        return
-                    }
-                    
-                    // generate token and login
-                    let token = await userLogin.attemptLogin(token: nil)
-                    guard let token else {
-                        errorDuringLoginAttempt = true
-                        return
-                    }
-                    
-                    appData.currentToken = token
-                    appData.currentUserEmail = userLogin.enteredUserName
-                    appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: true))
-                }
+                Task { await validateUserCreationAndLogin() }
             }, label: {
                 Text("Let's Move")
             })
@@ -181,5 +158,36 @@ struct CreateUserLoginView: View {
             Spacer()
         }
         .navigationBarBackButtonHidden()
+    }
+    
+    private func validateUserCreationAndLogin() async {
+        submissionAttempt = true
+        
+        // validate password requirements satisfied
+        guard eightCharacters && number && specialCharacter && passwordsMatch else {
+            return
+        }
+
+        // validate username not in use and create user
+        let createRequestStatus = await userLogin.createUser()
+        guard createRequestStatus else {
+            NSLog("Invalid create request")
+            return
+        }
+        
+        // generate token and login
+        let token = await userLogin.attemptLogin(token: nil)
+        guard let token else {
+            errorDuringLoginAttempt = true
+            return
+        }
+        
+        // update app data with token and email
+        appData.currentToken = token
+        appData.currentUserEmail = userLogin.enteredUserName
+        
+        // update master settings model with initial login
+        masterSettingsModel.first!.userProfileCreated = true
+        appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: true))
     }
 }

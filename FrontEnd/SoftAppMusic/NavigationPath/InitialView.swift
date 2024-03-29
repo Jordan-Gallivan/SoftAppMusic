@@ -9,28 +9,13 @@ import Foundation
 import SwiftData
 import SwiftUI
 
+
+/// Builds Navigation Path and routes initial View to either Login or Create Login View
 struct InitialView: View {
     @EnvironmentObject private var appData: AppData
     @Environment(\.modelContext) var dbContext
     @Query var masterSettingsModel: [MasterSettingsModel]
-    
-//    private func querySettings() async {
-//        print("This function is called")
-//        if masterSettingsModel.isEmpty {
-//            dbContext.insert(MasterSettingsModel())
-//        } else if !masterSettingsModel.first!.userProfileCreated {
-////                appData.viewPath.append(CreateUserProfileView())
-//        }
-//#warning("add logic to determine if saved login")
-//        
-//        let updatedWorkoutTypes = await FetchWorkoutTypes.fetchUpdatedWorkoutTypes()
-//        appData.workoutTypes = updatedWorkoutTypes ?? masterSettingsModel.first!.previousWorkoutTypes
-//        
-//        let updatedMusicTypes = await FetchMusicTypes.fetchUpdatedMusicTypes()
-//        appData.musicTypes = updatedMusicTypes ?? masterSettingsModel.first!.previousMusicTypes
-//
-//    }
-    
+       
     var body: some View {
         NavigationStack(path: $appData.viewPath) {
             VStack {
@@ -56,22 +41,5 @@ struct InitialView: View {
                 }
             }
         }
-//        .onAppear {
-//            if masterSettingsModel.isEmpty {
-//                dbContext.insert(MasterSettingsModel())
-//            } else if !masterSettingsModel.first!.userProfileCreated {
-////                appData.viewPath.append(CreateUserProfileView())
-//            }
-//#warning("add logic to determine if saved login")
-//
-//            Task {
-//                let updatedWorkoutTypes = await FetchWorkoutTypes.fetchUpdatedWorkoutTypes()
-//                appData.workoutTypes = updatedWorkoutTypes ?? masterSettingsModel.first!.previousWorkoutTypes
-//
-//                let updatedMusicTypes = await FetchMusicTypes.fetchUpdatedMusicTypes()
-//                appData.musicTypes = updatedMusicTypes ?? masterSettingsModel.first!.previousMusicTypes
-//            }
-//        }
-        
     }
 }
