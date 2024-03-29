@@ -39,4 +39,16 @@ enum HTTPRequests {
         
         return (responseData, response)
     }
+    
+    static func validateHTTPResponseCode(_ urlResponse: URLResponse, errorString: String) -> Bool {
+        guard let httpResponse = urlResponse as? HTTPURLResponse else {
+            NSLog("\(errorString) invalid HTTP Response.")
+            return false
+        }
+        guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
+            NSLog("\(errorString) invalid HTTP Response.")
+            return false
+        }
+        return true
+    }
 }

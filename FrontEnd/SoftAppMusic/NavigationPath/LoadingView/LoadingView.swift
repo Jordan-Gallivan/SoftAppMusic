@@ -9,9 +9,11 @@ import Foundation
 import SwiftUI
 
 struct LoadingView: View {
-    var pageName: String
+    var prompt: String
     
     var body: some View {
-        Text(pageName)
+        VStack {
+            ProgressView("\(prompt)")
+        }
     }
 }

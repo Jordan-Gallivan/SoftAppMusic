@@ -23,9 +23,9 @@ struct MultiSelectionView<T: Identifiable & Hashable>: View {
                             .foregroundStyle(.primary)
                         Spacer()
                         if selected.contains(where: { $0.id == selectable.id }) {
-                            Image(systemName: "checkmark")
+                            Image(systemName: "star")
                                 .symbolRenderingMode(.monochrome)
-                                .foregroundStyle(Color.accentColor)
+                                .foregroundStyle(Color.yellow)
                         }
                     }
                 }.tag(selectable.id)

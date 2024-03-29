@@ -17,6 +17,7 @@ struct LoginView: View {
     @EnvironmentObject private var appData: AppData
     @Environment(\.modelContext) var dbContext
     @Query var masterSettingsModel: [MasterSettingsModel]
+    @State var errorDuringLoginAttempt: Bool = false
     private var settings: MasterSettingsModel { masterSettingsModel.first! }
     private var stayLoggedIn: Binding<Bool> {
         Binding { settings.stayLoggedIn }
@@ -61,10 +62,18 @@ struct LoginView: View {
         VStack {
             Spacer()
             Spacer()
-            Image("logo")
-            Spacer()
-            Spacer()
             
+            Image("logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
+            Spacer()
+            Spacer()
+            if errorDuringLoginAttempt {
+                Text("Error during login. Please try again")
+                    .foregroundStyle(.red)
+                    .font(.footnote)
+            }
             LoginTextFields("Username",
                             content: $userLogin.enteredUserName,
                             errorStatus: usernameErrorStatus.wrappedValue)
@@ -80,11 +89,14 @@ struct LoginView: View {
                 Task {
                     let token = await userLogin.attemptLogin(token: nil)
                     guard let token else {
+                        errorDuringLoginAttempt = true
                         return
                     }
                     appData.currentToken = token
                     appData.currentUserEmail = userLogin.enteredUserName
-                    // MARK: navigate to next page
+                    
+                    // navigate to next page
+                    appData.viewPath.append(NavigationViews.workoutPormpt)
                 }
             }, label: {
                 Text("Let's Move")
@@ -99,9 +111,7 @@ struct LoginView: View {
             Spacer()
             
             Text("First time? Click to create a profile.")
-            NavigationLink("Create User") {
-                CreateUserLoginView()
-            }
+            NavigationLink("Create User", value: NavigationViews.createLoginView)
             
             Spacer()
             Spacer()

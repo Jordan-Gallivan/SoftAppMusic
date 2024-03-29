@@ -10,8 +10,17 @@ import SwiftUI
 
 struct ErrorView: View {
     var pageName: String
+    var refreshFunction: () async -> Void
     
     var body: some View {
-        Text(pageName)
+        VStack {
+            Image(systemName: "exclamationmark.triangle")
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(.red)
+            Text("Error Loading \(pageName)")
+        }
+        .refreshable {
+            await refreshFunction()
+        }
     }
 }

@@ -51,6 +51,8 @@ struct LoginTextFields: View {
                     TextField("", text: $content) { _ in
                         withAnimation(.default) { isFocused = !isFocused }
                     }
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .modifier(LoginTextFieldModifier(isEditing: isEditing, errorState: !errorStatus.isEmpty, height: $height))
                 }
             }

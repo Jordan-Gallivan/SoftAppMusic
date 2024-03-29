@@ -16,5 +16,10 @@ struct WorkoutMusicMatches: Codable {
         workoutTypes.forEach { userPreferences[$0] = [] }
     }
     
-    
+    init(existingWorkoutMusicMatches matches: [String: [String]]) {
+        userPreferences = [:]
+        for key in matches.keys {
+            userPreferences[key] = Set(matches[key] ?? [])
+        }
+    }
 }

@@ -7,7 +7,10 @@
 
 import Foundation
 
-enum NavigationPathConstants {
-    static let loginPage = "Login Page"
-    static let createLoginPage = "Create Login Page"
+enum NavigationViews: Hashable {
+    case loginView
+    case createLoginView
+    case userProfileView(createUserProfile: Bool)
+    case workoutPormpt
+    case workoutView(workoutType: String, musicType: String)
 }

@@ -24,12 +24,12 @@ struct UserProfileView: View {
             switch fetchUserData.result {
             case .empty:
                 EmptyView()
-            case .inProgress(let page):
-                LoadingView(pageName: page)
-            case .success(_):
-                // MARK: left off here
+            case .inProgress(_):
+                LoadingView(prompt: "Gather Profile Information")
+            case .success(let userProfileData):
                 VStack {
                     Form {
+                        
                         TextField("Email", text: $userProfileData.email)
                             .disabled(true)
                         TextField("First Name", text: $userProfileData.firstName)
@@ -51,10 +51,14 @@ struct UserProfileView: View {
                     Spacer()
                     
                     Button(action: {
-                        if isCreatingUserProfile {
-                            // MARK: navigate to app Main Screen
-                        } else {
-                            appData.viewPath.removeLast()
+                        Task {
+                            guard await updateUserData() else { return }
+                            appData.updateUserMusicPreferences(workoutMusicMatches)
+                            if isCreatingUserProfile {
+                                appData.viewPath.append(NavigationViews.workoutPormpt)
+                            } else {
+                                appData.viewPath.removeLast()
+                            }
                         }
                     }, label: {
                         Text(isCreatingUserProfile ? "Get Moving" : "Save")
@@ -64,45 +68,93 @@ struct UserProfileView: View {
                                              borderColor: StyleConstants.DarkBlue,
                                              textColor: Color.white))
                 }
+                .onAppear {
+                    Task { await self.initializeUserData() }
+                }
             case .failure(_):
-                ErrorView(pageName: "User Profile")
+                ErrorView(pageName: "User Profile") {
+                    await initializeUserData()
+                }
             }
                 
         }
         .navigationBarBackButtonHidden(isCreatingUserProfile)
         .task {
-            // check if first time updating user profile
-            if isCreatingUserProfile {
-                userProfileData = fetchUserData.createUserRequest(email: appData.currentUserEmail)
-                updateWorkoutsAndMusic(userPreferences: [:])
-                return
-            }                 
-            
-            // fetches current user data.  If unsuccessful, a default user profile is instantiated.
-            userProfileData = await fetchUserData.fetchUserData(email: appData.currentUserEmail, token: appData.currentToken)
-                                    ?? fetchUserData.createUserRequest(email: appData.currentUserEmail)
-            
-            // update current workout-music type matching if available
-            if case .success(let successfulUserData) = fetchUserData.result {
-                updateWorkoutsAndMusic(userPreferences: successfulUserData.workoutMusicMatches)
-            } else {
-                updateWorkoutsAndMusic(userPreferences: [:])
-            }
+            await initializeUserData()
         }
         .sheet(isPresented: $makeWorkoutMusicMatches) {
-            WorkoutMusicMatchView(
-                workoutMusicMatches: $workoutMusicMatches, 
-                musicTypes: [appData.musicTypes.decades, appData.musicTypes.genres].flatMap { $0 })
+            VStack {
+                WorkoutMusicMatchView(
+                    workoutMusicMatches: $workoutMusicMatches,
+                    musicTypes: appData.musicTypes.genres)
+                
+                Button("Save") { makeWorkoutMusicMatches.toggle() }
+                    .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
+            }
             .presentationDetents([.medium])
         }
     }
     
-    private func updateWorkoutsAndMusic(userPreferences: [String: [String]]) {
+    private func initializeUserData() async {
+        // check if first time updating user profile
+        if isCreatingUserProfile {
+            userProfileData = fetchUserData.createUserRequest(email: appData.currentUserEmail)
+            populateMusicPreferences(userPreferences: [:])
+            return
+        }
+        
+        // fetches current user data.  If unsuccessful, a default user profile is instantiated.
+        var profileData = await fetchUserData.fetchUserData(email: appData.currentUserEmail, token: appData.currentToken)
+        
+        if profileData == nil {
+            NSLog("Unable to fetch user profile data.  Creating Empty Profile")
+        }
+        userProfileData = profileData ?? fetchUserData.createUserRequest(email: appData.currentUserEmail)
+        
+        
+        let music = await FetchMusicAndWorkoutMatches.fetchUserPreferences(email: appData.currentUserEmail, token: appData.currentToken)
+        if music == nil {
+            NSLog("Unable to fetch music preferences.  Creating Empty Music Matches")
+        }
+        
+        // update music preferences
+        populateMusicPreferences(userPreferences: music?.userPreferences ?? [:])
+        
+        NSLog("Profile and Music Preferences Successfully Loaded")
+    }
+    
+    private func populateMusicPreferences(userPreferences: [String: Set<String>]) {
+        // pull workout types
         appData.workoutTypes.forEach { workoutMusicMatches.userPreferences[$0] = [] }
+        
         guard !userPreferences.isEmpty else { return }
         userPreferences.keys.forEach {
             workoutMusicMatches.userPreferences[$0] = Set(userPreferences[$0] ?? [])
         }
+    }
+    
+    private func updateUserData() async -> Bool {
+        guard await fetchUserData.updateUserData(
+            userProfileData: userProfileData,
+            email: userProfileData.email,
+            token: appData.currentToken)
+        else {
+            NSLog("Unable to update profile data")
+            return false
+        }
+        NSLog("Profile successfully updated.")
+        
+        guard await FetchMusicAndWorkoutMatches.updateUserPreferences(
+            email: appData.currentUserEmail,
+            matches: workoutMusicMatches,
+            token: appData.currentToken)
+        else {
+            NSLog("Unable to update Music Preferences")
+            return false
+        }
+        NSLog("Music Preferences successfully updated.")
+
+        return true
     }
 
 }

@@ -12,9 +12,18 @@
 		4C16F2802B716B1A00804477 /* MusicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27F2B716B1A00804477 /* MusicTypes.swift */; };
 		4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2852B71BFCD00804477 /* AsyncStatus.swift */; };
 		4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2882B71C16500804477 /* FetchUserData.swift */; };
-		4C16F28B2B71C21800804477 /* FetchMusicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28A2B71C21800804477 /* FetchMusicTypes.swift */; };
+		4C16F28B2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28A2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift */; };
 		4C16F28D2B76B8D200804477 /* CreateUserLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28C2B76B8D200804477 /* CreateUserLoginView.swift */; };
-		4C16F28F2B76BACD00804477 /* CreateUserValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */; };
+		4C17C7F62B9F6F7000D3CFF0 /* PolarBleSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 4C17C7F52B9F6F7000D3CFF0 /* PolarBleSdk */; };
+		4C17C7F92B9F6FBB00D3CFF0 /* PolarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C7F82B9F6FBB00D3CFF0 /* PolarController.swift */; };
+		4C17C8032B9F70CF00D3CFF0 /* SdkModeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C7FD2B9F70CE00D3CFF0 /* SdkModeFeature.swift */; };
+		4C17C8042B9F70CF00D3CFF0 /* BatteryStatusFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C7FE2B9F70CE00D3CFF0 /* BatteryStatusFeature.swift */; };
+		4C17C8052B9F70CF00D3CFF0 /* DeviceInfoFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C7FF2B9F70CE00D3CFF0 /* DeviceInfoFeature.swift */; };
+		4C17C8062B9F70CF00D3CFF0 /* DeviceSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C8002B9F70CE00D3CFF0 /* DeviceSearch.swift */; };
+		4C17C8072B9F70CF00D3CFF0 /* DeviceConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C8012B9F70CE00D3CFF0 /* DeviceConnectionState.swift */; };
+		4C17C8082B9F70CF00D3CFF0 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C8022B9F70CF00D3CFF0 /* Message.swift */; };
+		4C17C80B2B9F824B00D3CFF0 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C80A2B9F824B00D3CFF0 /* WorkoutView.swift */; };
+		4C17C80D2B9F826100D3CFF0 /* WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C17C80C2B9F826100D3CFF0 /* WorkoutSession.swift */; };
 		4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */; };
 		4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4586582B6D886D00ACB074 /* ContentView.swift */; };
 		4C45865B2B6D886D00ACB074 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C45865A2B6D886D00ACB074 /* Item.swift */; };
@@ -27,15 +36,19 @@
 		4C68F6932B7FEA2F00ED7B4D /* MasterSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68F6922B7FEA2F00ED7B4D /* MasterSettingsModel.swift */; };
 		4C68F6962B83B49F00ED7B4D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68F6952B83B49F00ED7B4D /* LoginView.swift */; };
 		4C68F6992B83B66300ED7B4D /* LoginTextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C68F6982B83B66300ED7B4D /* LoginTextFields.swift */; };
+		4C88F4B52BB1F8390002ED71 /* NotificationsRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4B42BB1F8390002ED71 /* NotificationsRequiredView.swift */; };
+		4C88F4B82BB3B0FA0002ED71 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4B72BB3B0FA0002ED71 /* InitialView.swift */; };
+		4C88F4BA2BB48FE20002ED71 /* FetchWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4B92BB48FE20002ED71 /* FetchWebSocket.swift */; };
+		4C88F4BC2BB4DD4C0002ED71 /* WorkoutLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */; };
 		4C9B97F42B8C23D500E5DFA8 /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97F32B8C23D500E5DFA8 /* MultiSelectionView.swift */; };
 		4C9B97F62B8D2A4D00E5DFA8 /* MusicTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97F52B8D2A4D00E5DFA8 /* MusicTypesView.swift */; };
-		4C9B97F92B8D6D5400E5DFA8 /* FetchWorkoutTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97F82B8D6D5400E5DFA8 /* FetchWorkoutTypes.swift */; };
 		4C9B97FB2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97FA2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift */; };
 		4C9B97FD2B8D771500E5DFA8 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97FC2B8D771500E5DFA8 /* UserProfileView.swift */; };
 		4C9B98002B8D7FCD00E5DFA8 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97FF2B8D7FCD00E5DFA8 /* LoadingView.swift */; };
 		4C9B98032B8D801900E5DFA8 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B98022B8D801900E5DFA8 /* ErrorView.swift */; };
 		4C9B98052B8EC3BC00E5DFA8 /* WorkoutMusicMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B98042B8EC3BC00E5DFA8 /* WorkoutMusicMatchView.swift */; };
 		4C9B98072B8FB84B00E5DFA8 /* DefaultButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B98062B8FB84B00E5DFA8 /* DefaultButtonStyling.swift */; };
+		4C9B982D2B964B4800E5DFA8 /* WorkoutPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B982C2B964B4800E5DFA8 /* WorkoutPromptView.swift */; };
 		4CAA6EBF2B84408100CE149D /* StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA6EBE2B84408100CE149D /* StyleConstants.swift */; };
 		4CAA6EC12B85977000CE149D /* NavigationPathConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA6EC02B85977000CE149D /* NavigationPathConstants.swift */; };
 		4CE8FE132B7BF4DB00756509 /* ApplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE8FE122B7BF4DB00756509 /* ApplicationData.swift */; };
@@ -67,9 +80,17 @@
 		4C16F27F2B716B1A00804477 /* MusicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTypes.swift; sourceTree = "<group>"; };
 		4C16F2852B71BFCD00804477 /* AsyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStatus.swift; sourceTree = "<group>"; };
 		4C16F2882B71C16500804477 /* FetchUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserData.swift; sourceTree = "<group>"; };
-		4C16F28A2B71C21800804477 /* FetchMusicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMusicTypes.swift; sourceTree = "<group>"; };
+		4C16F28A2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMusicAndWorkoutMatches.swift; sourceTree = "<group>"; };
 		4C16F28C2B76B8D200804477 /* CreateUserLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserLoginView.swift; sourceTree = "<group>"; };
-		4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserValidation.swift; sourceTree = "<group>"; };
+		4C17C7F82B9F6FBB00D3CFF0 /* PolarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolarController.swift; sourceTree = "<group>"; };
+		4C17C7FD2B9F70CE00D3CFF0 /* SdkModeFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SdkModeFeature.swift; sourceTree = "<group>"; };
+		4C17C7FE2B9F70CE00D3CFF0 /* BatteryStatusFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatteryStatusFeature.swift; sourceTree = "<group>"; };
+		4C17C7FF2B9F70CE00D3CFF0 /* DeviceInfoFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoFeature.swift; sourceTree = "<group>"; };
+		4C17C8002B9F70CE00D3CFF0 /* DeviceSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSearch.swift; sourceTree = "<group>"; };
+		4C17C8012B9F70CE00D3CFF0 /* DeviceConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceConnectionState.swift; sourceTree = "<group>"; };
+		4C17C8022B9F70CF00D3CFF0 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		4C17C80A2B9F824B00D3CFF0 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		4C17C80C2B9F826100D3CFF0 /* WorkoutSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSession.swift; sourceTree = "<group>"; };
 		4C4586532B6D886D00ACB074 /* SoftAppMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoftAppMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4586562B6D886D00ACB074 /* SoftAppMusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftAppMusicApp.swift; sourceTree = "<group>"; };
 		4C4586582B6D886D00ACB074 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,16 +106,21 @@
 		4C68F6922B7FEA2F00ED7B4D /* MasterSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterSettingsModel.swift; sourceTree = "<group>"; };
 		4C68F6952B83B49F00ED7B4D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4C68F6982B83B66300ED7B4D /* LoginTextFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextFields.swift; sourceTree = "<group>"; };
+		4C88F4B12BA12E850002ED71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4C88F4B42BB1F8390002ED71 /* NotificationsRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsRequiredView.swift; sourceTree = "<group>"; };
+		4C88F4B72BB3B0FA0002ED71 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
+		4C88F4B92BB48FE20002ED71 /* FetchWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchWebSocket.swift; sourceTree = "<group>"; };
+		4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutLoadingView.swift; sourceTree = "<group>"; };
 		4C9B97F32B8C23D500E5DFA8 /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		4C9B97F52B8D2A4D00E5DFA8 /* MusicTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTypesView.swift; sourceTree = "<group>"; };
 		4C9B97F72B8D311E00E5DFA8 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
-		4C9B97F82B8D6D5400E5DFA8 /* FetchWorkoutTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchWorkoutTypes.swift; sourceTree = "<group>"; };
 		4C9B97FA2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMusicMatches.swift; sourceTree = "<group>"; };
 		4C9B97FC2B8D771500E5DFA8 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		4C9B97FF2B8D7FCD00E5DFA8 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		4C9B98022B8D801900E5DFA8 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		4C9B98042B8EC3BC00E5DFA8 /* WorkoutMusicMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMusicMatchView.swift; sourceTree = "<group>"; };
 		4C9B98062B8FB84B00E5DFA8 /* DefaultButtonStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButtonStyling.swift; sourceTree = "<group>"; };
+		4C9B982C2B964B4800E5DFA8 /* WorkoutPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPromptView.swift; sourceTree = "<group>"; };
 		4CAA6EBE2B84408100CE149D /* StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstants.swift; sourceTree = "<group>"; };
 		4CAA6EC02B85977000CE149D /* NavigationPathConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationPathConstants.swift; sourceTree = "<group>"; };
 		4CE8FE122B7BF4DB00756509 /* ApplicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationData.swift; sourceTree = "<group>"; };
@@ -108,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C17C7F62B9F6F7000D3CFF0 /* PolarBleSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,12 +160,11 @@
 			children = (
 				4C16F2852B71BFCD00804477 /* AsyncStatus.swift */,
 				4C16F2882B71C16500804477 /* FetchUserData.swift */,
-				4C16F28A2B71C21800804477 /* FetchMusicTypes.swift */,
-				4C16F28E2B76BACD00804477 /* CreateUserValidation.swift */,
+				4C16F28A2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift */,
 				4CE8FE142B7BF65500756509 /* FetchUserLogin.swift */,
 				4CE8FE192B7BFCDB00756509 /* FetchError.swift */,
 				4C68F6902B7FE5D500ED7B4D /* HTTPRequests.swift */,
-				4C9B97F82B8D6D5400E5DFA8 /* FetchWorkoutTypes.swift */,
+				4C88F4B92BB48FE20002ED71 /* FetchWebSocket.swift */,
 			);
 			path = FetchComponents;
 			sourceTree = "<group>";
@@ -149,6 +175,39 @@
 				4C68F6922B7FEA2F00ED7B4D /* MasterSettingsModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4C17C7F72B9F6F8400D3CFF0 /* HeartRate */ = {
+			isa = PBXGroup;
+			children = (
+				4C17C7FC2B9F70C400D3CFF0 /* PolarModels */,
+				4C17C7F82B9F6FBB00D3CFF0 /* PolarController.swift */,
+			);
+			path = HeartRate;
+			sourceTree = "<group>";
+		};
+		4C17C7FC2B9F70C400D3CFF0 /* PolarModels */ = {
+			isa = PBXGroup;
+			children = (
+				4C17C7FE2B9F70CE00D3CFF0 /* BatteryStatusFeature.swift */,
+				4C17C8012B9F70CE00D3CFF0 /* DeviceConnectionState.swift */,
+				4C17C7FF2B9F70CE00D3CFF0 /* DeviceInfoFeature.swift */,
+				4C17C8002B9F70CE00D3CFF0 /* DeviceSearch.swift */,
+				4C17C8022B9F70CF00D3CFF0 /* Message.swift */,
+				4C17C7FD2B9F70CE00D3CFF0 /* SdkModeFeature.swift */,
+			);
+			path = PolarModels;
+			sourceTree = "<group>";
+		};
+		4C17C8092B9F823A00D3CFF0 /* WorkoutView */ = {
+			isa = PBXGroup;
+			children = (
+				4C17C80A2B9F824B00D3CFF0 /* WorkoutView.swift */,
+				4C17C80C2B9F826100D3CFF0 /* WorkoutSession.swift */,
+				4C88F4B42BB1F8390002ED71 /* NotificationsRequiredView.swift */,
+				4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */,
+			);
+			path = WorkoutView;
 			sourceTree = "<group>";
 		};
 		4C45864A2B6D886D00ACB074 = {
@@ -174,6 +233,8 @@
 		4C4586552B6D886D00ACB074 /* SoftAppMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C88F4B12BA12E850002ED71 /* Info.plist */,
+				4C17C7F72B9F6F8400D3CFF0 /* HeartRate */,
 				4C9B97F22B8C23C500E5DFA8 /* Auxillary */,
 				4C68F6942B83B48E00ED7B4D /* NavigationPath */,
 				4CE8FE162B7BFB6200756509 /* Constants */,
@@ -218,10 +279,13 @@
 		4C68F6942B83B48E00ED7B4D /* NavigationPath */ = {
 			isa = PBXGroup;
 			children = (
+				4C17C8092B9F823A00D3CFF0 /* WorkoutView */,
+				4C9B982B2B964B3100E5DFA8 /* WorkoutPrompt */,
 				4C9B98012B8D800E00E5DFA8 /* ErrorView */,
 				4C9B97FE2B8D7FC000E5DFA8 /* LoadingView */,
 				4C9B97F12B8C231B00E5DFA8 /* UserProfile */,
 				4C68F6972B83B65100ED7B4D /* Login */,
+				4C88F4B72BB3B0FA0002ED71 /* InitialView.swift */,
 			);
 			path = NavigationPath;
 			sourceTree = "<group>";
@@ -275,6 +339,14 @@
 			path = ErrorView;
 			sourceTree = "<group>";
 		};
+		4C9B982B2B964B3100E5DFA8 /* WorkoutPrompt */ = {
+			isa = PBXGroup;
+			children = (
+				4C9B982C2B964B4800E5DFA8 /* WorkoutPromptView.swift */,
+			);
+			path = WorkoutPrompt;
+			sourceTree = "<group>";
+		};
 		4CE8FE162B7BFB6200756509 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,12 +367,16 @@
 				4C45864F2B6D886D00ACB074 /* Sources */,
 				4C4586502B6D886D00ACB074 /* Frameworks */,
 				4C4586512B6D886D00ACB074 /* Resources */,
+				4C88F4B62BB1FD040002ED71 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SoftAppMusic;
+			packageProductDependencies = (
+				4C17C7F52B9F6F7000D3CFF0 /* PolarBleSdk */,
+			);
 			productName = SoftAppMusic;
 			productReference = 4C4586532B6D886D00ACB074 /* SoftAppMusic.app */;
 			productType = "com.apple.product-type.application";
@@ -373,6 +449,9 @@
 				Base,
 			);
 			mainGroup = 4C45864A2B6D886D00ACB074;
+			packageReferences = (
+				4C17C7F42B9F6F7000D3CFF0 /* XCRemoteSwiftPackageReference "polar-ble-sdk" */,
+			);
 			productRefGroup = 4C4586542B6D886D00ACB074 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -410,11 +489,32 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4C88F4B62BB1FD040002ED71 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nTAGS=\"TODO:|FIXME:\"\nfind \"${SRCROOT}/\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4C45864F2B6D886D00ACB074 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C17C8032B9F70CF00D3CFF0 /* SdkModeFeature.swift in Sources */,
 				4C9B98072B8FB84B00E5DFA8 /* DefaultButtonStyling.swift in Sources */,
 				4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */,
 				4CAA6EBF2B84408100CE149D /* StyleConstants.swift in Sources */,
@@ -422,26 +522,37 @@
 				4C9B97FB2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift in Sources */,
 				4C68F6932B7FEA2F00ED7B4D /* MasterSettingsModel.swift in Sources */,
 				4C9B97FD2B8D771500E5DFA8 /* UserProfileView.swift in Sources */,
+				4C17C8082B9F70CF00D3CFF0 /* Message.swift in Sources */,
 				4CE8FE1A2B7BFCDB00756509 /* FetchError.swift in Sources */,
 				4C68F6992B83B66300ED7B4D /* LoginTextFields.swift in Sources */,
 				4C45865B2B6D886D00ACB074 /* Item.swift in Sources */,
 				4C9B98002B8D7FCD00E5DFA8 /* LoadingView.swift in Sources */,
-				4C16F28B2B71C21800804477 /* FetchMusicTypes.swift in Sources */,
-				4C16F28F2B76BACD00804477 /* CreateUserValidation.swift in Sources */,
+				4C16F28B2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift in Sources */,
+				4C17C7F92B9F6FBB00D3CFF0 /* PolarController.swift in Sources */,
 				4C16F2802B716B1A00804477 /* MusicTypes.swift in Sources */,
 				4C9B97F62B8D2A4D00E5DFA8 /* MusicTypesView.swift in Sources */,
 				4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */,
 				4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */,
 				4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */,
+				4C17C8042B9F70CF00D3CFF0 /* BatteryStatusFeature.swift in Sources */,
+				4C17C8052B9F70CF00D3CFF0 /* DeviceInfoFeature.swift in Sources */,
+				4C88F4B82BB3B0FA0002ED71 /* InitialView.swift in Sources */,
 				4CAA6EC12B85977000CE149D /* NavigationPathConstants.swift in Sources */,
 				4CE8FE132B7BF4DB00756509 /* ApplicationData.swift in Sources */,
+				4C88F4BA2BB48FE20002ED71 /* FetchWebSocket.swift in Sources */,
+				4C17C80D2B9F826100D3CFF0 /* WorkoutSession.swift in Sources */,
 				4CE8FE182B7BFB7000756509 /* APIConstants.swift in Sources */,
 				4C16F28D2B76B8D200804477 /* CreateUserLoginView.swift in Sources */,
+				4C17C8062B9F70CF00D3CFF0 /* DeviceSearch.swift in Sources */,
 				4C9B98052B8EC3BC00E5DFA8 /* WorkoutMusicMatchView.swift in Sources */,
+				4C17C8072B9F70CF00D3CFF0 /* DeviceConnectionState.swift in Sources */,
+				4C88F4B52BB1F8390002ED71 /* NotificationsRequiredView.swift in Sources */,
 				4C9B98032B8D801900E5DFA8 /* ErrorView.swift in Sources */,
 				4C9B97F42B8C23D500E5DFA8 /* MultiSelectionView.swift in Sources */,
 				4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */,
-				4C9B97F92B8D6D5400E5DFA8 /* FetchWorkoutTypes.swift in Sources */,
+				4C17C80B2B9F824B00D3CFF0 /* WorkoutView.swift in Sources */,
+				4C88F4BC2BB4DD4C0002ED71 /* WorkoutLoadingView.swift in Sources */,
+				4C9B982D2B964B4800E5DFA8 /* WorkoutPromptView.swift in Sources */,
 				4C68F6962B83B49F00ED7B4D /* LoginView.swift in Sources */,
 				4C68F6912B7FE5D500ED7B4D /* HTTPRequests.swift in Sources */,
 				4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */,
@@ -533,6 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -590,6 +702,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -611,9 +724,11 @@
 				DEVELOPMENT_TEAM = HP26796RUL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoftAppMusic/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "SoftApp Music needs access to your Bluetooth to monitor your heart rate";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "SoftApp Music needs access to your Bluetooth to monitor your heart rate";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -640,9 +755,11 @@
 				DEVELOPMENT_TEAM = HP26796RUL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SoftAppMusic/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "SoftApp Music needs access to your Bluetooth to monitor your heart rate";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "SoftApp Music needs access to your Bluetooth to monitor your heart rate";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -774,6 +891,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4C17C7F42B9F6F7000D3CFF0 /* XCRemoteSwiftPackageReference "polar-ble-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/polarofficial/polar-ble-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4C17C7F52B9F6F7000D3CFF0 /* PolarBleSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C17C7F42B9F6F7000D3CFF0 /* XCRemoteSwiftPackageReference "polar-ble-sdk" */;
+			productName = PolarBleSdk;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4C45864B2B6D886D00ACB074 /* Project object */;
 }

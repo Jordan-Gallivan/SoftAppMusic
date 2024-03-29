@@ -24,6 +24,10 @@ enum ErrorStates {
     case passwordsDoNotMatch
 }
 
+struct Token: Decodable {
+    let token: String
+}
+
 
 @MainActor
 class FetchUserLogin: ObservableObject {
@@ -60,16 +64,20 @@ class FetchUserLogin: ObservableObject {
         let username: Bool
         let password: Bool
     }
-    private struct Token: Decodable {
-        let token: String
-    }
     
     /// Validates user login data and returns a JWT token if login is valid
+    /// Published JSON:
+    /// `{`
+    /// `  "username": "exampleUserName"
+    /// `  "password": "examplePassword"
+    /// `}`
     ///
+    /// Expected Response JSON:
+    /// ` { "token": String }
     /// - Returns: JWT token String if login is valid and class variable status is set to .success.
     /// Otherwise class variable status is set to .error or .failure and nil is returned.
     public func attemptLogin(token: String?) async -> String? {
-        return "abcdefg"    // MARK: remove after testing
+
         // validate number of attempted logins
         guard attempts <= 3 else {
             passwordStatus = .tooManyAttempts
@@ -92,45 +100,54 @@ class FetchUserLogin: ObservableObject {
         let message = UsernameAndPassword(username: enteredUserName, password: enteredPassword)
         
         do {
-            let (responseData, response) = try await HTTPRequests.POST(urlString: "\(APIConstants.API_URL)/\(APIConstants.LOGIN)",
+            let (data, urlResponse) = try await HTTPRequests.POST(urlString: "\(APIConstants.API_URL)/\(APIConstants.LOGIN)",
                                                                        message: message,
                                                                        token: token)
             
-            guard let response_status = response as? HTTPURLResponse else {
+            guard let response_status = urlResponse as? HTTPURLResponse else {
                 NSLog("Corrupt HTTP Response Code")
                 status = .error(FetchError.HTTPResponseError(message: "Corrupt HTTP Response Code"))
                 return nil
             }
             
             // verify 200 HTTP Response code
-            guard response_status.statusCode == 200 else {
+            guard response_status.statusCode >= 200 && response_status.statusCode < 300 else {
                 if response_status.statusCode == 401 {
+                    NSLog("INVALID LOGIN: \(String(data: data, encoding: .utf8) ?? "UNABLE TO PARSE")")
                     let usernamePasswordResponse = try JSONDecoder().decode(
                         InvalidUsernamePasswordResponse.self,
-                        from: responseData)
+                        from: data)
                     handleInvalidUserNamePassword(usernamePasswordResponse)
                 } else {
-                    print(String(data: responseData, encoding: .utf8)!)
+                    print(String(data: data, encoding: .utf8)!)
                     print(response_status.statusCode)
                     status = .error(FetchError.HTTPResponseError(message: "HTTP Response Code: \(response_status.statusCode)"))
                 }
                 return nil
             }
-            let token = try JSONDecoder().decode(Token.self, from: responseData)
+            let token = try JSONDecoder().decode(Token.self, from: data)
             status = .success(token.token)
             
-            print(token)
             return token.token
             
         } catch {
+            NSLog("Error parsing Token")
             status = .error(error)
         }
         return nil
         
     }
     
+    
+    /// Creates a user with given username and password.  Username and password requirements are validated locally.  Only 3 attempts are allowed.
+    /// Any errors are captured in the .status attribute.
+    /// Posted JSON:
+    /// `{`
+    /// `  "username": "exampleUserName"
+    /// `  "password": "examplePassword"
+    /// `}`
+    /// - Returns: True if user creation is successful.
     func createUser() async -> Bool {
-        return true    // MARK: remove after testing
         // validate number of attempted logins
         guard attempts <= 3 else {
             passwordStatus = .tooManyAttempts
@@ -163,7 +180,7 @@ class FetchUserLogin: ObservableObject {
             }
             
             // verify 200 HTTP Response code
-            guard response_status.statusCode == 200 else {
+            guard response_status.statusCode >= 200 && response_status.statusCode < 300 else {
                 NSLog("HTTP Response Code: \(response_status.statusCode)")
                 if response_status.statusCode == 409 {
                     usernameStatus = .invalid

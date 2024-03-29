@@ -9,44 +9,45 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @EnvironmentObject private var appData: AppData
-    @Environment(\.modelContext) var dbContext
-    @Query var masterSettingsModel: [MasterSettingsModel]
+    private enum status {
+        case loading
+        case initialized
+    }
     
+    @EnvironmentObject private var appData: AppData
+    @Environment(\.modelContext) private var dbContext
+    @Query private var masterSettingsModel: [MasterSettingsModel]
+    @State private var status: status = .loading
+    
+        
     var body: some View {
-        NavigationStack(path: $appData.viewPath) {
-            Group {
-                if masterSettingsModel.first!.userProfileCreated {
-                    LoginView()
-                } else {
-                    CreateUserLoginView()
-                }
-            }
-            .navigationDestination(for: String.self) { destination in
-                if destination == "user profile create" {
-                    UserProfileView(isCreatingUserProfile: true)
-                } else if destination == "user profile" {
-                    UserProfileView(isCreatingUserProfile: false)
-                }
+        VStack {
+            switch self.status {
+            case .loading:
+                LoadingView(prompt: "Initializing Application")
+            case .initialized:
+                InitialView()
             }
         }
         .onAppear {
+            self.status = .loading
             if masterSettingsModel.isEmpty {
                 dbContext.insert(MasterSettingsModel())
             } else if !masterSettingsModel.first!.userProfileCreated {
 //                appData.viewPath.append(CreateUserProfileView())
             }
-            // MARK: add logic to determine if saved login
-            
+#warning("add logic to determine if saved login")
+
             Task {
-                let updatedWorkoutTypes = await FetchWorkoutTypes.fetchUpdatedWorkoutTypes()
+                let updatedWorkoutTypes = await FetchMusicAndWorkoutMatches.fetchUpdatedWorkoutTypes()
                 appData.workoutTypes = updatedWorkoutTypes ?? masterSettingsModel.first!.previousWorkoutTypes
-                
-                let updatedMusicTypes = await FetchMusicTypes.fetchUpdatedMusicTypes()
+
+                let updatedMusicTypes = await FetchMusicAndWorkoutMatches.fetchUpdatedMusicTypes()
                 appData.musicTypes = updatedMusicTypes ?? masterSettingsModel.first!.previousMusicTypes
+                
             }
-        }
-        
+            self.status = .initialized
+        }        
     }
 }
 

@@ -12,6 +12,7 @@ o implement correct fetch calls:
     o music types (FetchMusicTypes -> line 13)
     o workout types (FetchWorkoutTypes -> line 17)
     o fetch user login (FetchUserLogin -> Line 72)
+    o post updated user profile info (UserProfileView) -> line 56
 
 Navigation Stack
     o Login View
@@ -23,7 +24,11 @@ Navigation Stack
 
 o Fetch User Data -> error handling
 
-o loading view
+x loading view
 
-o error view
+x error view
+
+Update Navigation Links:
+    o Login View -> Line 82
+    o Create Login View -> Line 139
 

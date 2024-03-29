@@ -19,7 +19,7 @@ class MasterSettingsModel: Identifiable {
     var token: String = ""
     
     // Music Types
-    var previousMusicTypes: MusicTypes = MusicTypes(decades: [], genres: [])
+    var previousMusicTypes: MusicTypes = MusicTypes(genres: [])
     
     // Workout Types
     var previousWorkoutTypes: [String] = []
@@ -30,7 +30,7 @@ class MasterSettingsModel: Identifiable {
     init() { }
     
     func setDefaults() {
-        self.previousMusicTypes = MusicTypes(decades: ["1980s", "1990s", "2000s", "2010s", "2020s"], genres: ["rock", "pop", "rap", "punk"])
+        self.previousMusicTypes = MusicTypes(genres: ["rock", "pop", "rap", "punk"])
         self.previousWorkoutTypes = ["HIIT", "Tempo Run", "Long Run", "WeightLifting"]
     }
 }

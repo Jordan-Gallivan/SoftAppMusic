@@ -13,10 +13,8 @@ struct UserProfileData: Codable {
     var lastName: String = ""
     var age: String = ""
     var spotifyConsent: Bool = false
-    var workoutMusicMatches: [String: [String]] = [:]
-    
 }
 
 struct SpotifyLogin: Codable {
-    // MARK: figure out where this goes
+    #warning("figure out where this goes")
 }

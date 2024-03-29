@@ -34,6 +34,7 @@ struct CreateUserLoginView: View {
     @EnvironmentObject private var appData: AppData
     @Environment(\.modelContext) private var dbContext
     @Query private var masterSettingsModel: [MasterSettingsModel]
+    @State var errorDuringLoginAttempt: Bool = false
     private var settings: MasterSettingsModel { masterSettingsModel.first! }
     private var userProfileCreated: Binding<Bool> {
         Binding { settings.userProfileCreated }
@@ -105,8 +106,16 @@ struct CreateUserLoginView: View {
             Spacer()
             Spacer()
             Image("logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             Spacer()
             Spacer()
+            
+            if errorDuringLoginAttempt {
+                Text("Error during login. Please try again")
+                    .foregroundStyle(.red)
+                    .font(.footnote)
+            }
             
             LoginTextFields("Username",
                             content: $userLogin.enteredUserName,
@@ -134,6 +143,7 @@ struct CreateUserLoginView: View {
             
             Button(action: {
                 submissionAttempt = true
+                
                 // validate password requirements satisfied
                 guard eightCharacters && number && specialCharacter && passwordsMatch else {
                     return
@@ -142,31 +152,30 @@ struct CreateUserLoginView: View {
                     // validate username not in use and create user
                     let createRequestStatus = await userLogin.createUser()
                     guard createRequestStatus else {
-                        // MARK: error handling
+                        NSLog("Invalid create request")
                         return
                     }
                     
                     // generate token and login
                     let token = await userLogin.attemptLogin(token: nil)
-                    guard let token else { return }
+                    guard let token else {
+                        errorDuringLoginAttempt = true
+                        return
+                    }
                     
                     appData.currentToken = token
                     appData.currentUserEmail = userLogin.enteredUserName
-                    appData.viewPath.append("user profile create")
+                    appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: true))
                 }
             }, label: {
                 Text("Let's Move")
             })
             .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
             
-
-            
             Spacer()
-            
+
             Text("Already a user? Click here to log in.")
-            NavigationLink("Log in") {
-                LoginView()
-            }
+            NavigationLink("Log in", value: NavigationViews.loginView)
             
             Spacer()
             Spacer()
