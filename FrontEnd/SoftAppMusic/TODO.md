@@ -1,34 +1,42 @@
 #  TODO List
-
-o Update API Endpoints
-    o Login
-    o Create Login
-    o userprofile
-    o music types
-    o workout types
-    o music preferences
     
-o implement correct fetch calls:
-    o music types (FetchMusicTypes -> line 13)
-    o workout types (FetchWorkoutTypes -> line 17)
-    o fetch user login (FetchUserLogin -> Line 72)
-    o post updated user profile info (UserProfileView) -> line 56
+o Validate spotify credentials upon login!
+o Spotify Conset/username password
+o refresh buttons/pull down?
+o xn from create user profile to fetching music preferences.  Add "initial user creation to init"?
 
-Navigation Stack
-    o Login View
-        o Login Button
-        x Create User Button
-    o Create User View
-        o create user button
-        x Login button
+Today:
+x display TOS to user before account creation -> After account created, before login
+o user profile:
+    x if create user -> set spotifyConsent to True
+    o Required Fields -> age
+    x add "updateSpotifyCredentials" call
+o workoutPrompt: 
+    x implement validation of spotify credentials
+        if !spotifyConsent -> display spotify SpotifyLogin
+    x implement functionality to just pull user preferences from appData
+x SpotifyCredentialsView
+x add updateSpotifyCredentials() to fetchUserData
+o spoftify credentials view:
+    o padding above username field
+    o save button
+o add refresh button for error page
+    o add closure to error view 
 
-o Fetch User Data -> error handling
 
-x loading view
-
-x error view
-
-Update Navigation Links:
-    o Login View -> Line 82
-    o Create Login View -> Line 139
-
+Tuesday discussion Items:
+o spotify credential endpoint
+    /user_profile_data/{email}/spotify_credentials
+o handling the "spotifyConsent" attribute
+    - if credentials work? -> keep true
+    - else -> set to false, user will be prompted again to add credentials
+o WebSocket
+    - initial request:
+        -> initial GET
+        <- {url: $websocketURL }
+    - integer HR data every second
+    - threshold tripped?
+        <- {"recommendation": Int,        
+            "suggestion": fast || slow }
+        -> {"recommendation": Int,
+            "accept": Bool }

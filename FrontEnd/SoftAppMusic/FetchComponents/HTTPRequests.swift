@@ -18,6 +18,7 @@ enum HTTPRequests {
     }
     
     private static func makeRequest(urlString: String, token: String?, data: Data? = nil ) async throws -> (Data, URLResponse) {
+        NSLog("Fetch to url: \(urlString)")
         let url = URL(string: urlString)
         guard let url else {
             NSLog("ERROR ESTABLISHING URL")
@@ -46,7 +47,7 @@ enum HTTPRequests {
             return false
         }
         guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
-            NSLog("\(errorString) invalid HTTP Response.")
+            NSLog("\(errorString) invalid HTTP Response. \(httpResponse.statusCode) ")
             return false
         }
         return true

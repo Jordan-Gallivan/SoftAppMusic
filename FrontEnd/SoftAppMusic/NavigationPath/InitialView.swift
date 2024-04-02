@@ -32,12 +32,19 @@ struct InitialView: View {
                     LoginView()
                 case .createLoginView:
                     CreateUserLoginView()
-                case .userProfileView(let createUserProfile):
-                    UserProfileView(isCreatingUserProfile: createUserProfile)
-                case .workoutPormpt:
-                    WorkoutPromptView()
+                case .userProfileView(let createUserProfile, let invalidCredentials):
+                    UserProfileView(isCreatingUserProfile: createUserProfile, invalidSpotifyCredentials: invalidCredentials)
+                case .workoutPormpt(let initialUse):
+                    WorkoutPromptView(initialUse: initialUse)
                 case .workoutView(workoutType: let workoutType, musicType: let musicType):
                     WorkoutView(workoutType: workoutType, musicType: musicType)
+                }
+            }
+            .onAppear {
+                NSLog("checking status of music and workouts in master settings model")
+                if masterSettingsModel.first!.previousWorkoutTypes.isEmpty {
+                    NSLog("updating master settings model")
+                    masterSettingsModel.first!.setDefaults()
                 }
             }
         }

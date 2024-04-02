@@ -19,7 +19,7 @@ class MasterSettingsModel: Identifiable {
     var token: String = ""
     
     // Music Types
-    var previousMusicTypes: MusicTypes = MusicTypes(genres: [])
+    var previousMusicTypes: [String] = []
     
     // Workout Types
     var previousWorkoutTypes: [String] = []
@@ -27,10 +27,20 @@ class MasterSettingsModel: Identifiable {
     // Workout to Music Matches
     var previousWorkoutMusicMatches: WorkoutMusicMatches = WorkoutMusicMatches(workoutTypes: [])
     
-    init() { }
+    init() {
+        self.setDefaults()
+    }
     
     func setDefaults() {
-        self.previousMusicTypes = MusicTypes(genres: ["rock", "pop", "rap", "punk"])
+        self.previousMusicTypes = self.defaultMusicTypes()
         self.previousWorkoutTypes = ["HIIT", "Tempo Run", "Long Run", "WeightLifting"]
+    }
+    
+    func defaultMusicTypes() -> [String] {
+        return ["rock", "pop", "rap", "punk"]
+    }
+    
+    func defaultWorkoutTypes() -> [String] {
+        return ["HIIT", "Tempo Run", "Long Run", "WeightLifting"]
     }
 }

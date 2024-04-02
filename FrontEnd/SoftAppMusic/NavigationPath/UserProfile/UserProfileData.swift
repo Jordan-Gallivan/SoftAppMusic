@@ -11,10 +11,11 @@ struct UserProfileData: Codable {
     var email: String = ""
     var firstName: String = ""
     var lastName: String = ""
-    var age: String = ""
+    var age: Int = 0
     var spotifyConsent: Bool = false
 }
 
 struct SpotifyLogin: Codable {
-    #warning("figure out where this goes")
+    var spotifyUserName: String = ""
+    var spotifyPassword: String = ""
 }

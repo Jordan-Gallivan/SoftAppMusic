@@ -12,10 +12,12 @@ struct WorkoutPromptView: View {
     private enum Status {
         case loading
         case initialized
+//        case invalidTosConsent
     }
     
     @EnvironmentObject private var appData: AppData
     @ObservedObject private var fetchUserData = FetchUserData()
+    private var initialUse: Bool
     
     @State private var status: Status = .loading
     
@@ -29,6 +31,10 @@ struct WorkoutPromptView: View {
         return matchesForSelectedWorkout
     }
     
+    init(initialUse: Bool) {
+        self.initialUse = initialUse
+    }
+    
     // computed property prompt for view
     private var whatAreYouFeelingString: String {
         if selectedWorkout.contains("Run") {
@@ -40,7 +46,7 @@ struct WorkoutPromptView: View {
     
     // computed property that updates the available music choices by sorting user prefered choices at the top of the list
     private var musicChoices: [String] {
-        var musicChoices: [String] = appData.musicTypes.genres
+        var musicChoices: [String] = appData.musicTypes
         // validate user has workoutMusic match preferences
         guard let workoutMusicMatches = appData.workoutMusicMatches?.userPreferences,
               let matchesForSelectedWorkout = workoutMusicMatches[selectedWorkout] else {
@@ -106,11 +112,7 @@ struct WorkoutPromptView: View {
             }
         }
         .onAppear {
-            self.status = .loading
-            Task {
-                await buildWorkOutMusicMatches()
-                self.status = .initialized
-            }
+            Task { await self.initializeWorkoutPrompt() }
         }
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -124,8 +126,48 @@ struct WorkoutPromptView: View {
         }
     }
     
+    private func initializeWorkoutPrompt() async {
+        self.status = .loading
+        
+        if !self.initialUse {
+            guard await verifyTosConset() else {
+                appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: false, invalidCredentials: true))
+                return
+            }
+        }
+        await buildWorkOutMusicMatches()
+        self.status = .initialized
+    }
+    
     private func buildWorkOutMusicMatches() async {
+        NSLog("Populating workout/music matches")
+        if appData.workoutMusicMatches != nil {
+            NSLog("Initial or recently updated matches.  Populating from AppData")
+            return
+        }
         let workoutMusicMatches = await FetchMusicAndWorkoutMatches.fetchUserPreferences(email: appData.currentUserEmail, token: appData.currentToken)
+        if workoutMusicMatches == nil {
+            NSLog("Failure fetching workout/music matches.  Initializing options to nil.")
+        } else {
+            NSLog("Success fetching workout/music matches.")
+        }
         appData.workoutMusicMatches = workoutMusicMatches
+        self.status = .initialized
+    }
+    
+    private func verifyTosConset() async -> Bool {
+        NSLog("Validating Spotify Login")
+        if appData.validSpotifyConsent {
+            NSLog("Spotify Login validated - initial app usage")
+            return true
+        }
+        let profileData = await fetchUserData.fetchUserData(email: appData.currentUserEmail, token: appData.currentToken)
+        
+        guard let profileData, profileData.spotifyConsent else {
+            NSLog("Invalid Spotify credentials - routing to user profile view")
+            return false
+        }
+        NSLog("Valid Spotify credentials")
+        return true
     }
 }

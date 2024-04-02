@@ -24,11 +24,22 @@ enum SocketError: Error {
 
 class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     
+    private struct WorkoutMusicChoice: Codable {
+        var workoutType: String
+        var musicType: String
+    }
+    
+    private struct WebSocketMessage: Codable {
+        var request: Int
+        var message: String
+    }
+    
     @Published var status: SocketStatus = .empty
     private var socketToken: String = ""
     @Published var messages = [String]()
     private var socket: URLSessionWebSocketTask?
     private var notificationNumber: Int = 0
+    private var currentRequest: Int = 0
 //    @Published var notificationPending: Bool = false
     @Published var pendingNotificationMessage: String? = nil
     private var notificationPendingTrigger: (Bool) -> Void = { _ in }
@@ -84,23 +95,43 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         
         do {
             NSLog("Fetching WebSocket URL")
-            let url = try await FetchWebSocket.fecthWebSocketURL(email: email, token: token, workoutType: workoutType, musicType: musicType)
+            guard let url = URL(string: APIConstants.INITIATE_WORKOUT_SESSION(email: email)) else {
+                NSLog("Error creating url")
+                return
+            }
+            let data = try JSONEncoder().encode(WorkoutMusicChoice(workoutType: workoutType, musicType: musicType))
             // initiate websocket connection
             NSLog("Connecting to WebSocket")
-            self.connect(url)
+            self.connect(email: email, token: token, url: url, data: data)
         } catch {
             status = .error(error)
         }
     }
     
-    private func connect(_ url: URL) {
+    private func connect(email: String,
+                         token: String,
+                         url: URL,
+                         data: Data) {
+        
         var request = URLRequest(url: url)
         request.setValue( "Bearer \(socketToken)", forHTTPHeaderField: "Authorization")
+        
+        request.httpBody = data
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         socket = URLSession.shared.webSocketTask(with: request)
         guard socket != nil else {
             NSLog("Unable to connect to WebSocket")
             self.status = .error(SocketError.unableToConnect)
             return
+        }
+        NSLog("\(socket?.state)")
+        socket?.sendPing() { error in
+            if let error {
+                NSLog("Ping Error: \(error.localizedDescription)")
+            } else {
+                NSLog("Ping successful!")
+            }
         }
         
         NSLog("Connected to WebSocket")
@@ -125,10 +156,8 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
                 self.status = .connected
                 switch message {
                 case .data(let data):
-                    let str = String(decoding: data, as: UTF8.self)
-                    self.messages.append(str)
                     Task {
-                        await self.notifyUser(message: str)
+                        await self.processMessage(data)
                     }
                     self.receiveMessages()
                 case .string(let messageString):
@@ -141,8 +170,9 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
                 @unknown default:
                     print("unknown")
                 }
-            case .failure(_):
-                print("failure")
+            case .failure(let error):
+//                print("Receive Error. \(error.localizedDescription)")
+                self.receiveMessages()
             }
         }
     }
@@ -204,30 +234,51 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
     
+    private func processMessage(_ data: Data) async {
+        do {
+            let socketMessage = try JSONDecoder().decode(WebSocketMessage.self, from: data)
+            self.currentRequest = socketMessage.request
+            await self.notifyUser(message: socketMessage.message)
+        } catch {
+            NSLog("error processing message: \(error.localizedDescription)")
+        }
+    }
+    
     func acceptChanges() {
         NSLog("User accepted changes")
         self.deactivateNotification()
-//        self.sendMessages(message: "ACCEPT")
-        #warning("remove after testing")
+        guard let data = buildMessage(message: "accept") else {
+            return
+        }
+        self.sendMessages(data: data, message: "accept")
+//        #warning("remove after testing")
     }
     
     func rejectChanges() {
         NSLog("User rejected changes")
         self.deactivateNotification()
+        #warning("come back here")
+    }
+    
+    private func buildMessage(message: String) -> Data? {
+        do {
+            let data = try JSONEncoder().encode(WebSocketMessage(request: self.currentRequest, message: message))
+            return data
+        } catch {
+            NSLog("Error building message: \(message).  Error: \(error.localizedDescription)")
+            return nil
+        }
+        
     }
     
     /// Sends provided message via websocket
     /// - Parameter message: string message to be sent.  Must be .utf8 encodable
     /// - Returns: true if message is successfully sent.  
     @discardableResult
-    func sendMessages(message: String) -> Bool {
+    func sendMessages(data: Data, message: String) -> Bool {
         NSLog("...sending \(message)")
-        guard let data = message.data(using: .utf8) else {
-            NSLog("Error converting message")
-            return false
-        }
         var success = true
-        socket?.send(.string(message)) { error in
+        socket?.send(.data(data)) { error in
             if let error {
                 NSLog("Error sending message. \(error.localizedDescription)")
                 success = false

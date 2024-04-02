@@ -16,12 +16,20 @@ class AppData: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     @Published var currentUserEmail: String = ""
     @Published var currentToken: String = ""
         
-    @Published var musicTypes: MusicTypes = MusicTypes(genres: [])
+    @Published var musicTypes: [String] = []
     @Published var workoutTypes: [String] = []
     @Published var workoutMusicMatches: WorkoutMusicMatches? = nil
+    @Published var validSpotifyConsent: Bool = false
     
     func updateUserMusicPreferences(_ newMatches: WorkoutMusicMatches) {
         self.workoutMusicMatches = newMatches
     }
     
+    func setDefaults() -> ([String], [String]) {
+        let musicTypes = ["rock", "pop", "rap", "punk"]
+        let workoutTypes = ["HIIT", "Tempo Run", "Long Run", "WeightLifting"]
+        self.musicTypes = musicTypes
+        self.workoutTypes = workoutTypes
+        return (musicTypes, workoutTypes)
+    }
 }

@@ -82,6 +82,7 @@ struct CreateUserLoginView: View {
     }
     
     @State private var submissionAttempt = false
+    @State private var displayTermsOfService = false
     
     private var passwordErrorStatus: Binding<String> {
         Binding {
@@ -100,91 +101,124 @@ struct CreateUserLoginView: View {
         }
         set: { _ in return}
     }
-  
     
     var body: some View {
-        VStack {
-            Spacer()
-            Spacer()
-            Image("logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-            Spacer()
-            Spacer()
-            
-            if errorDuringLoginAttempt {
-                Text("Error during login. Please try again")
-                    .foregroundStyle(.red)
-                    .font(.footnote)
-            }
-            
-            LoginTextFields("Username",
-                            content: $userLogin.enteredUserName,
-                            errorStatus: usernameErrorStatus.wrappedValue)
-            .padding()
-            
-            LoginTextFields("Password",
-                            content: password1,
-                            errorStatus: "",
-                            isPassword: true)
-            .padding()
-            
-            VStack(alignment: .leading){
-                PasswordRequirements(requirement: "8 characters", requirementSatisfied: $eightCharacters, submissionAttempt: $submissionAttempt)
-                PasswordRequirements(requirement: "One Number", requirementSatisfied: $number, submissionAttempt: $submissionAttempt)
-                PasswordRequirements(requirement: "One Special Character", requirementSatisfied: $specialCharacter, submissionAttempt: $submissionAttempt)
-                PasswordRequirements(requirement: "Passwords Match", requirementSatisfied: $passwordsMatch, submissionAttempt: $submissionAttempt)
-            }
-            
-            LoginTextFields("Password",
-                            content: password2,
-                            errorStatus: "",
-                            isPassword: true)
-            .padding()
-            
-            Button(action: {
-                Task { await validateUserCreationAndLogin() }
-            }, label: {
-                Text("Let's Move")
-            })
-            .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
-            
-            Spacer()
+        Group {
+            if displayTermsOfService {
+                TermsOfServiceView {
+                    acceptTos()
+                }
+            } else {
+                VStack {
+                    Spacer()
+                    Spacer()
+                    Image("logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    Spacer()
+                    Spacer()
+                    
+                    if errorDuringLoginAttempt {
+                        Text("Error during login. Please try again")
+                            .foregroundStyle(.red)
+                            .font(.footnote)
+                    }
+                    
+                    LoginTextFields("Username",
+                                    content: $userLogin.enteredUserName,
+                                    errorStatus: usernameErrorStatus.wrappedValue)
+                    .padding()
+                    
+                    LoginTextFields("Password",
+                                    content: password1,
+                                    errorStatus: "",
+                                    isPassword: true)
+                    .padding()
+                    
+                    VStack(alignment: .leading){
+                        PasswordRequirements(requirement: "8 characters", requirementSatisfied: $eightCharacters, submissionAttempt: $submissionAttempt)
+                        PasswordRequirements(requirement: "One Number", requirementSatisfied: $number, submissionAttempt: $submissionAttempt)
+                        PasswordRequirements(requirement: "One Special Character", requirementSatisfied: $specialCharacter, submissionAttempt: $submissionAttempt)
+                        PasswordRequirements(requirement: "Passwords Match", requirementSatisfied: $passwordsMatch, submissionAttempt: $submissionAttempt)
+                    }
+                    
+                    LoginTextFields("Password",
+                                    content: password2,
+                                    errorStatus: "",
+                                    isPassword: true)
+                    .padding()
+                    
+                    Button(action: {
+                        Task {
+                            guard await validateUserCreationAndLogin() else {
+                                return
+                            }
+                            displayTermsOfService = true
+                        }
+                    }, label: {
+                        if case .inprogress = userLogin.status {
+                            ProgressView()
+                        } else {
+                            Text("Let's Move")
+                        }
+                    })
+                    .disabled( {
+                        if case .inprogress = userLogin.status {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }())
+                    .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
+                    
+                    Spacer()
 
-            Text("Already a user? Click here to log in.")
-            NavigationLink("Log in", value: NavigationViews.loginView)
-            
-            Spacer()
-            Spacer()
+                    Text("Already a user? Click here to log in.")
+                    NavigationLink("Log in", value: NavigationViews.loginView)
+                    
+                    Spacer()
+                    Spacer()
+                }
+            }
         }
         .navigationBarBackButtonHidden()
     }
     
-    private func validateUserCreationAndLogin() async {
+    private func validateUserCreationAndLogin() async -> Bool {
         submissionAttempt = true
         
         // validate password requirements satisfied
         guard eightCharacters && number && specialCharacter && passwordsMatch else {
-            return
+            return false
         }
 
         // validate username not in use and create user
         let createRequestStatus = await userLogin.createUser()
         guard createRequestStatus else {
             NSLog("Invalid create request")
-            return
+            return false
         }
         
         // generate token and login
         let token = await userLogin.attemptLogin(token: nil)
         guard let token else {
             errorDuringLoginAttempt = true
-            return
+            return false
         }
         
         // update app data with token and email
         appData.currentToken = token
         appData.currentUserEmail = userLogin.enteredUserName
+        
+        
+        return true
+//        // update master settings model with initial login
+//        masterSettingsModel.first!.userProfileCreated = true
+//        appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: true))
+    }
+    
+    private func acceptTos() {
+        displayTermsOfService = false
         
         // update master settings model with initial login
         masterSettingsModel.first!.userProfileCreated = true

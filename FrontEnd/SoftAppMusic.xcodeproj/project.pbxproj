@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27B2B7166B000804477 /* UserProfileData.swift */; };
 		4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27D2B71683C00804477 /* EmailRegex.swift */; };
-		4C16F2802B716B1A00804477 /* MusicTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27F2B716B1A00804477 /* MusicTypes.swift */; };
 		4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2852B71BFCD00804477 /* AsyncStatus.swift */; };
 		4C16F2892B71C16500804477 /* FetchUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2882B71C16500804477 /* FetchUserData.swift */; };
 		4C16F28B2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F28A2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift */; };
@@ -40,6 +39,9 @@
 		4C88F4B82BB3B0FA0002ED71 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4B72BB3B0FA0002ED71 /* InitialView.swift */; };
 		4C88F4BA2BB48FE20002ED71 /* FetchWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4B92BB48FE20002ED71 /* FetchWebSocket.swift */; };
 		4C88F4BC2BB4DD4C0002ED71 /* WorkoutLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */; };
+		4C88F4BE2BB9D0F40002ED71 /* SpotifyCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4BD2BB9D0F40002ED71 /* SpotifyCredentialsView.swift */; };
+		4C88F4C22BB9DDE50002ED71 /* TermsOfServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4C12BB9DDE50002ED71 /* TermsOfServiceView.swift */; };
+		4C88F4C52BBC542F0002ED71 /* SpotifyLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C88F4C42BBC542F0002ED71 /* SpotifyLoginViewModel.swift */; };
 		4C9B97F42B8C23D500E5DFA8 /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97F32B8C23D500E5DFA8 /* MultiSelectionView.swift */; };
 		4C9B97F62B8D2A4D00E5DFA8 /* MusicTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97F52B8D2A4D00E5DFA8 /* MusicTypesView.swift */; };
 		4C9B97FB2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9B97FA2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift */; };
@@ -77,7 +79,6 @@
 /* Begin PBXFileReference section */
 		4C16F27B2B7166B000804477 /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
 		4C16F27D2B71683C00804477 /* EmailRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRegex.swift; sourceTree = "<group>"; };
-		4C16F27F2B716B1A00804477 /* MusicTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTypes.swift; sourceTree = "<group>"; };
 		4C16F2852B71BFCD00804477 /* AsyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStatus.swift; sourceTree = "<group>"; };
 		4C16F2882B71C16500804477 /* FetchUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserData.swift; sourceTree = "<group>"; };
 		4C16F28A2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMusicAndWorkoutMatches.swift; sourceTree = "<group>"; };
@@ -111,6 +112,9 @@
 		4C88F4B72BB3B0FA0002ED71 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		4C88F4B92BB48FE20002ED71 /* FetchWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchWebSocket.swift; sourceTree = "<group>"; };
 		4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutLoadingView.swift; sourceTree = "<group>"; };
+		4C88F4BD2BB9D0F40002ED71 /* SpotifyCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyCredentialsView.swift; sourceTree = "<group>"; };
+		4C88F4C12BB9DDE50002ED71 /* TermsOfServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceView.swift; sourceTree = "<group>"; };
+		4C88F4C42BBC542F0002ED71 /* SpotifyLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyLoginViewModel.swift; sourceTree = "<group>"; };
 		4C9B97F32B8C23D500E5DFA8 /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		4C9B97F52B8D2A4D00E5DFA8 /* MusicTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicTypesView.swift; sourceTree = "<group>"; };
 		4C9B97F72B8D311E00E5DFA8 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 		4C68F6942B83B48E00ED7B4D /* NavigationPath */ = {
 			isa = PBXGroup;
 			children = (
+				4C88F4BF2BB9D7CA0002ED71 /* Terms of Service */,
 				4C17C8092B9F823A00D3CFF0 /* WorkoutView */,
 				4C9B982B2B964B3100E5DFA8 /* WorkoutPrompt */,
 				4C9B98012B8D800E00E5DFA8 /* ErrorView */,
@@ -301,10 +306,27 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		4C88F4BF2BB9D7CA0002ED71 /* Terms of Service */ = {
+			isa = PBXGroup;
+			children = (
+				4C88F4C12BB9DDE50002ED71 /* TermsOfServiceView.swift */,
+			);
+			path = "Terms of Service";
+			sourceTree = "<group>";
+		};
+		4C88F4C32BBC53F90002ED71 /* SpotifyCredentials */ = {
+			isa = PBXGroup;
+			children = (
+				4C88F4BD2BB9D0F40002ED71 /* SpotifyCredentialsView.swift */,
+				4C88F4C42BBC542F0002ED71 /* SpotifyLoginViewModel.swift */,
+			);
+			path = SpotifyCredentials;
+			sourceTree = "<group>";
+		};
 		4C9B97F12B8C231B00E5DFA8 /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				4C16F27F2B716B1A00804477 /* MusicTypes.swift */,
+				4C88F4C32BBC53F90002ED71 /* SpotifyCredentials */,
 				4C16F27B2B7166B000804477 /* UserProfileData.swift */,
 				4C9B97F52B8D2A4D00E5DFA8 /* MusicTypesView.swift */,
 				4C9B97FA2B8D70F800E5DFA8 /* WorkoutMusicMatches.swift */,
@@ -516,6 +538,7 @@
 			files = (
 				4C17C8032B9F70CF00D3CFF0 /* SdkModeFeature.swift in Sources */,
 				4C9B98072B8FB84B00E5DFA8 /* DefaultButtonStyling.swift in Sources */,
+				4C88F4C22BB9DDE50002ED71 /* TermsOfServiceView.swift in Sources */,
 				4C4586592B6D886D00ACB074 /* ContentView.swift in Sources */,
 				4CAA6EBF2B84408100CE149D /* StyleConstants.swift in Sources */,
 				4CE8FE152B7BF65500756509 /* FetchUserLogin.swift in Sources */,
@@ -529,7 +552,6 @@
 				4C9B98002B8D7FCD00E5DFA8 /* LoadingView.swift in Sources */,
 				4C16F28B2B71C21800804477 /* FetchMusicAndWorkoutMatches.swift in Sources */,
 				4C17C7F92B9F6FBB00D3CFF0 /* PolarController.swift in Sources */,
-				4C16F2802B716B1A00804477 /* MusicTypes.swift in Sources */,
 				4C9B97F62B8D2A4D00E5DFA8 /* MusicTypesView.swift in Sources */,
 				4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */,
 				4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */,
@@ -543,6 +565,7 @@
 				4C17C80D2B9F826100D3CFF0 /* WorkoutSession.swift in Sources */,
 				4CE8FE182B7BFB7000756509 /* APIConstants.swift in Sources */,
 				4C16F28D2B76B8D200804477 /* CreateUserLoginView.swift in Sources */,
+				4C88F4C52BBC542F0002ED71 /* SpotifyLoginViewModel.swift in Sources */,
 				4C17C8062B9F70CF00D3CFF0 /* DeviceSearch.swift in Sources */,
 				4C9B98052B8EC3BC00E5DFA8 /* WorkoutMusicMatchView.swift in Sources */,
 				4C17C8072B9F70CF00D3CFF0 /* DeviceConnectionState.swift in Sources */,
@@ -555,6 +578,7 @@
 				4C9B982D2B964B4800E5DFA8 /* WorkoutPromptView.swift in Sources */,
 				4C68F6962B83B49F00ED7B4D /* LoginView.swift in Sources */,
 				4C68F6912B7FE5D500ED7B4D /* HTTPRequests.swift in Sources */,
+				4C88F4BE2BB9D0F40002ED71 /* SpotifyCredentialsView.swift in Sources */,
 				4C4586572B6D886D00ACB074 /* SoftAppMusicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -100,6 +100,7 @@ class FetchUserLogin: ObservableObject {
         let message = UsernameAndPassword(username: enteredUserName, password: enteredPassword)
         
         do {
+            NSLog("Initiating Login...")
             let (data, urlResponse) = try await HTTPRequests.POST(urlString: "\(APIConstants.API_URL)/\(APIConstants.LOGIN)",
                                                                        message: message,
                                                                        token: token)
@@ -127,6 +128,7 @@ class FetchUserLogin: ObservableObject {
             }
             let token = try JSONDecoder().decode(Token.self, from: data)
             status = .success(token.token)
+            NSLog("Login Attempt successful.")
             
             return token.token
             

@@ -62,9 +62,9 @@ struct WorkoutView: View {
                 VStack {
                     Spacer()
                     Text("Heart Rate")
-                        .font(.subheadline)
-                    Text(polarController.hrString)
                         .font(.largeTitle)
+                    Text(polarController.hrString)
+                        .font(.system(size: 30))
                     
                     Spacer()
                     
@@ -113,9 +113,9 @@ struct WorkoutView: View {
                     VStack {
                         Spacer()
                         Text("Heart Rate")
-                            .font(.subheadline)
-                        Text(polarController.hrString)
                             .font(.largeTitle)
+                        Text(polarController.hrString)
+                            .font(.system(size: 30))
                         
                         Spacer()
                         Button("Stop") {
@@ -154,12 +154,13 @@ struct WorkoutView: View {
         NSLog("Bluetooth check successful")
         
         // check polar connection
-        await checkpolarStatus()
-        guard case .polarConnected = status else {
-            NSLog("Unable to connect to Polar Monitor")
-            return
-        }
-        NSLog("Polar Monitor check successful")
+//        await checkpolarStatus()
+//        guard case .polarConnected = status else {
+//            NSLog("Unable to connect to Polar Monitor")
+//            return
+//        }
+//        NSLog("Polar Monitor check successful")
+        #warning("fix after testing")
         
         self.status = .checkingNotifications
         // check notification settings

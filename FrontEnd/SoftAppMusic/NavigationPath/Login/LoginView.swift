@@ -96,11 +96,22 @@ struct LoginView: View {
                     appData.currentUserEmail = userLogin.enteredUserName
                     
                     // navigate to next page
-                    appData.viewPath.append(NavigationViews.workoutPormpt)
+                    appData.viewPath.append(NavigationViews.workoutPormpt(initialUse: false))
                 }
             }, label: {
-                Text("Let's Move")
+                if case .inprogress = userLogin.status {
+                    ProgressView()
+                } else {
+                    Text("Let's Move")
+                }
             })
+            .disabled( {
+                if case .inprogress = userLogin.status {
+                    return true
+                } else {
+                    return false
+                }
+            }())
             .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue, borderColor: StyleConstants.DarkBlue, textColor: Color.white))
             
             Toggle(isOn: stayLoggedIn) {

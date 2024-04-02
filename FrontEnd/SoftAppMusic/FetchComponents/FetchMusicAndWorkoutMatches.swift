@@ -13,14 +13,14 @@ enum FetchMusicAndWorkoutMatches {
     /// 
     /// `{"genres": ["genre1", "genre2", "genre3"] }`
     /// - Returns: MusicTypes Struct with updated genres if successful, otherwise nil.
-    static func fetchUpdatedMusicTypes() async -> MusicTypes? {
+    static func fetchUpdatedMusicTypes() async -> [String]? {
         do {
             let (data, urlResponse) = try await HTTPRequests.GET(urlString: "\(APIConstants.API_URL)/\(APIConstants.MUSIC_TYPES)", token: nil)
             guard HTTPRequests.validateHTTPResponseCode(urlResponse, errorString: "Fetch Music Types") else {
                 return nil
             }
             NSLog("Music Types received: \(String(data: data, encoding: .utf8) ?? "UNABLE TO PARSE")")
-            let updatedMusicTypes = try JSONDecoder().decode(MusicTypes.self, from: data)
+            let updatedMusicTypes = try JSONDecoder().decode([String].self, from: data)
             return updatedMusicTypes
             
         } catch {
@@ -29,9 +29,7 @@ enum FetchMusicAndWorkoutMatches {
         }
     }
     
-    private struct workoutTypes: Decodable {
-        let types: [String]
-    }
+
     
     /// Fetches Updated workout types.  Expected JSON:
     /// `{`
@@ -46,8 +44,8 @@ enum FetchMusicAndWorkoutMatches {
             }
             
             NSLog("Workout Types received: \(String(data: data, encoding: .utf8) ?? "UNABLE TO PARSE")")
-            let updatedWorkoutTypes = try JSONDecoder().decode(workoutTypes.self, from: data)
-            return updatedWorkoutTypes.types
+            let updatedWorkoutTypes = try JSONDecoder().decode([String].self, from: data)
+            return updatedWorkoutTypes
         } catch  {
             NSLog("Error Fetching workout types.  \(error.localizedDescription)")
             return nil

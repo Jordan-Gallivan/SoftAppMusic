@@ -10,7 +10,11 @@ import Foundation
 @MainActor
 class FetchUserData: ObservableObject {
     
-    @Published var result: AsyncStatus<UserProfileData> = .empty
+    struct SpotifyCredentials: Codable {
+        var code: String
+    }
+    
+    @Published var result: AsyncStatus<UserProfileData?> = .empty
     
     /// Fetches updated user profile information.  Expected JSON:
     ///
@@ -56,12 +60,13 @@ class FetchUserData: ObservableObject {
     func updateUserData(userProfileData: UserProfileData, email: String, token: String) async -> Bool {
         result = .inProgress(page: "Updating User Profile")
         do {
-            let (_, urlResponse) = try await HTTPRequests.POST(
+            let (data, urlResponse) = try await HTTPRequests.POST(
                 urlString: "\(APIConstants.API_URL)/\(APIConstants.PUT_USER_PROFILE(email: email))",
                 message: userProfileData,
                 token: token)
             guard HTTPRequests.validateHTTPResponseCode(urlResponse, errorString: "Update User Data") else {
                 result = .failure(FetchError.HTTPResponseError(message: "HTTP Response error. \(urlResponse)"))
+                print("response body: \(String(data: data, encoding: .utf8))")
                 return false
             }
             
@@ -80,5 +85,40 @@ class FetchUserData: ObservableObject {
         let userProfileData = UserProfileData(email: email)
         result = .success(userProfileData)
         return userProfileData
+    }
+    
+    
+    /// Updates the user's spotify login credentials.  Outbound JSON:
+    /// `{
+    /// `  "spotifyUserName": String,
+    /// `  "spotifyPassword": String,
+    /// `}
+    /// - Parameters:
+    ///   - email:
+    ///   - spotifyCredentials:
+    ///   - token:
+    /// - Returns: true if successful.
+    func updateSpotifyCredentials(code: String, email: String, token: String) async -> Bool {
+        result = .inProgress(page: "Updating Spotify Login")
+        do  {
+            let (data, urlResponse) = try await HTTPRequests.POST(
+                urlString: "\(APIConstants.API_URL)/\(APIConstants.SPOTIFY_CREDENTIALS(email: email))",
+                message: SpotifyCredentials(code: code),
+                token: token)
+            guard HTTPRequests.validateHTTPResponseCode(urlResponse, errorString: "Update Spotify Login") else {
+                result = .failure(FetchError.HTTPResponseError(message: "HTTP Response error. \(urlResponse)"))
+                print("response body: \(String(data: data, encoding: .utf8))")
+                return false
+            }
+            
+        } catch {
+            NSLog("Error fetching user profile data \(error.localizedDescription)")
+            result = .failure(error)
+            return false
+        }
+        
+        NSLog("Spotify Login successfully updated")
+        result = .success(nil)
+        return true
     }
 }

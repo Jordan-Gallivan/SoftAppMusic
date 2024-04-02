@@ -9,6 +9,10 @@ import RxSwift
 @MainActor
 class PolarController: ObservableObject {
     
+    private struct HeartRateData: Codable {
+        var heartRate: Int
+    }
+    
     private var api = PolarBleApiDefaultImpl.polarImplementation(DispatchQueue.main,
                                                                  features: [PolarBleSdkFeature.feature_hr,
                                                                             PolarBleSdkFeature.feature_polar_sdk_mode,
@@ -92,9 +96,12 @@ class PolarController: ObservableObject {
         
         socketSuccess = true
         socketAttempts = 0
+        
         self.timer = Timer(timeInterval: 1, repeats: true) { timer in
             self.sendHrData()
         }
+        NSLog("starting Timer")
+        self.timer?.fire()
         
         return nil
     }
@@ -111,14 +118,23 @@ class PolarController: ObservableObject {
     }
     
     func sendHrData() {
-        guard let hr = self.currentHr else {
-            NSLog("HR IS NIL")
-//            self.socketSuccess = false
-            return
-        }
-        guard self.workoutSession.sendMessages(message: "\(hr)") else {
-            socketAttempts += 1
-            self.socketSuccess = socketAttempts >= 10
+//        guard let hr = self.currentHr else {
+//            NSLog("HR IS NIL")
+////            self.socketSuccess = false
+//            return
+//        }
+        let hr = 123
+        #warning("fix after testing")
+        
+        do {
+            let data = try JSONEncoder().encode(HeartRateData(heartRate: hr))
+            guard self.workoutSession.sendMessages(data: data, message: "\(hr)") else {
+                socketAttempts += 1
+                self.socketSuccess = socketAttempts >= 10
+                return
+            }
+        } catch {
+            NSLog("Error converting hr data to JSON")
             return
         }
         socketAttempts = 0
