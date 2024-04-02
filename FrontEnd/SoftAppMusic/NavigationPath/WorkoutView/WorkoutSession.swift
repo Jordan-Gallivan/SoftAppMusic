@@ -116,8 +116,8 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         var request = URLRequest(url: url)
         request.setValue( "Bearer \(socketToken)", forHTTPHeaderField: "Authorization")
         
-        request.httpBody = data
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.httpBody = data
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         socket = URLSession.shared.webSocketTask(with: request)
         guard socket != nil else {
@@ -136,6 +136,7 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         
         NSLog("Connected to WebSocket")
         socket?.resume()
+        #warning("Send initial data")
         self.status = .connected
         NSLog("Receiving Messages")
         self.receiveMessages()
@@ -255,9 +256,12 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     }
     
     func rejectChanges() {
-        NSLog("User rejected changes")
+        NSLog("User accepted changes")
         self.deactivateNotification()
-        #warning("come back here")
+        guard let data = buildMessage(message: "reject") else {
+            return
+        }
+        self.sendMessages(data: data, message: "reject")
     }
     
     private func buildMessage(message: String) -> Data? {

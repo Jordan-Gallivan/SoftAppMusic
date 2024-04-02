@@ -17,7 +17,7 @@ enum APIConstants {
     static let USER_PROFILE = "user_profile"
     static let SPOTIFY = "spotify_credentials"
     static func INITIATE_WORKOUT_SESSION(email: String) -> String {
-        return "init_session/\(email)"
+        return "wss://soft-music-app.onrender.com/init_session/\(email)"
     }
     static func USER_MUSIC_PREFERENCES(email: String) -> String {
         return "\(USER_PROFILE)/\(email)/\(MUSIC_PREFERENCES)"
