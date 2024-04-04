@@ -21,6 +21,7 @@ class SpotifyLoginViewModel: NSObject, ObservableObject, ASWebAuthenticationPres
 enum SpotifyURLBuilder {
     private static let domain = "accounts.spotify.com"
     private static let clientID = "f9fa4c46888643a4bbe9dac4ca54273d"
+    private static let scope = "user-read-playback-state user-modify-playback-state user-read-currently-playing streaming"
     
     private static func url(_ state: String) -> URL {
         var components = URLComponents()
