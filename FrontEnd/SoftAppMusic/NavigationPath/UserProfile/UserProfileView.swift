@@ -216,7 +216,7 @@ struct UserProfileView: View {
         appData.workoutMusicMatches = workoutMusicMatches
         NSLog("Music Preferences successfully updated.")
 
-        if appData.validSpotifyConsent {
+        if appData.validSpotifyConsent && self.SpotifyCode == nil {
             NSLog("Previous Spotify Consent.  Saving User Data and exiting")
             return true
         }
@@ -231,6 +231,7 @@ struct UserProfileView: View {
             NSLog("Unable to update Spotify credentials.")
             return false
         }
+        NSLog("Spotify credentials successfully updated")
         
         return true
     }
