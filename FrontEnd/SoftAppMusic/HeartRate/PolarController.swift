@@ -97,8 +97,11 @@ class PolarController: ObservableObject {
         socketSuccess = true
         socketAttempts = 0
         
-        self.timer = Timer(timeInterval: 1, repeats: true) { timer in
-            self.sendHrData()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            Task {
+                await self.sendHrData()
+                #warning("remove below")
+            }
         }
         NSLog("starting Timer")
         self.timer?.fire()
@@ -117,13 +120,19 @@ class PolarController: ObservableObject {
         workoutSession.disconnect()
     }
     
+    private var testHR = 0
+    
     func sendHrData() {
 //        guard let hr = self.currentHr else {
 //            NSLog("HR IS NIL")
 ////            self.socketSuccess = false
 //            return
 //        }
-        let hr = 123
+        guard case .connected = workoutSession.status else {
+            return
+        }
+        testHR += 1
+        let hr = testHR
         #warning("fix after testing")
         
         do {

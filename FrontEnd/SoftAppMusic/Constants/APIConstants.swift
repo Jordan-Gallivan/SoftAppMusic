@@ -16,8 +16,11 @@ enum APIConstants {
     static let WORKOUT_TYPES = "workout_types"
     static let USER_PROFILE = "user_profile"
     static let SPOTIFY = "spotify_credentials"
-    static func INITIATE_WORKOUT_SESSION(email: String) -> String {
-        return "wss://soft-music-app.onrender.com/init_session/\(email)"
+    static func AUTH_WEBSOCKET(email: String) -> String {
+        return "\(API_URL)/init_session/\(email)/auth"
+    }
+    static func INITIATE_WORKOUT_SESSION(email: String, token: String) -> String {
+         "wss://soft-music-app.onrender.com/init_session/\(email)?token=\(token)"
     }
     static func USER_MUSIC_PREFERENCES(email: String) -> String {
         return "\(USER_PROFILE)/\(email)/\(MUSIC_PREFERENCES)"

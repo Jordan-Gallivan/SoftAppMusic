@@ -94,7 +94,7 @@ struct LoginView: View {
                     }
                     appData.currentToken = token
                     appData.currentUserEmail = userLogin.enteredUserName
-                    
+                    settings.userProfileCreated = true
                     // navigate to next page
                     appData.viewPath.append(NavigationViews.workoutPormpt(initialUse: false))
                 }

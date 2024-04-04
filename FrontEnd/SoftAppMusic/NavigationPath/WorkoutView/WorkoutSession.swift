@@ -35,9 +35,9 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     }
     
     @Published var status: SocketStatus = .empty
-    private var socketToken: String = ""
     @Published var messages = [String]()
     private var socket: URLSessionWebSocketTask?
+    private var pendingSocketAuthorization = true
     private var notificationNumber: Int = 0
     private var currentRequest: Int = 0
 //    @Published var notificationPending: Bool = false
@@ -48,6 +48,10 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         super.init()
         let center = UNUserNotificationCenter.current()
         center.delegate = self
+    }
+    
+    deinit {
+        socket?.cancel()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -94,15 +98,21 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         self.status = .connecting
         
         do {
-            NSLog("Fetching WebSocket URL")
-            guard let url = URL(string: APIConstants.INITIATE_WORKOUT_SESSION(email: email)) else {
-                NSLog("Error creating url")
+            NSLog("Fetching WebSocket Token")
+            let singleUseToken = try await FetchWebSocket.fecthWebSocketToken(email: email, token: token)
+//            NSLog("URL to fetch single use token: \(APIConstants.AUTH_WEBSOCKET(email: email))")
+            guard let url = URL(string: APIConstants.INITIATE_WORKOUT_SESSION(email: email, token: singleUseToken)) else {
+                NSLog("Error building url: \(APIConstants.INITIATE_WORKOUT_SESSION(email: email, token: singleUseToken))")
+                status = .error(SocketError.urlError)
                 return
             }
+            NSLog("URL to connect to websocket: \(url)")
+//            return
+//            #warning("REMOVE ABOVE AFTER TESTING")
             let data = try JSONEncoder().encode(WorkoutMusicChoice(workoutType: workoutType, musicType: musicType))
             // initiate websocket connection
             NSLog("Connecting to WebSocket")
-            self.connect(email: email, token: token, url: url, data: data)
+            await self.connect(email: email, token: token, url: url, data: data)
         } catch {
             status = .error(error)
         }
@@ -111,41 +121,38 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     private func connect(email: String,
                          token: String,
                          url: URL,
-                         data: Data) {
+                         data: Data) async {
         
         var request = URLRequest(url: url)
-        request.setValue( "Bearer \(socketToken)", forHTTPHeaderField: "Authorization")
-        
-//        request.httpBody = data
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
         socket = URLSession.shared.webSocketTask(with: request)
+        
         guard socket != nil else {
             NSLog("Unable to connect to WebSocket")
             self.status = .error(SocketError.unableToConnect)
             return
         }
-        NSLog("\(socket?.state)")
-        socket?.sendPing() { error in
-            if let error {
-                NSLog("Ping Error: \(error.localizedDescription)")
-            } else {
-                NSLog("Ping successful!")
-            }
-        }
         
         NSLog("Connected to WebSocket")
         socket?.resume()
-        #warning("Send initial data")
-        self.status = .connected
+
+        
+
         NSLog("Receiving Messages")
         self.receiveMessages()
+        NSLog("Pausing until handshake complete")
+        while self.pendingSocketAuthorization { }
+        NSLog("Handshake complete.  Initiating Workout.")
+        self.sendMessages(data: data, message: "\(String(data: data, encoding: .utf8) ?? "Initial Data")")
+        
+        self.status = .connected
+            
     }
     
     /// Closes the websocket connection
     func disconnect() {
         NSLog("Disconnecting from WebSocket")
         self.socket?.cancel()
+        self.socket = nil
     }
 
     private func receiveMessages() {
@@ -163,16 +170,16 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
                     self.receiveMessages()
                 case .string(let messageString):
                     self.messages.append(messageString)
-                    NSLog("----> Message received: \(messageString) <----")
+//                    NSLog("----> Message received: \(messageString) <----")
                     Task {
-                        await self.notifyUser(message: messageString)
+                        await self.processMessage(Data(messageString.utf8))
                     }
                     self.receiveMessages()
                 @unknown default:
                     print("unknown")
                 }
             case .failure(let error):
-//                print("Receive Error. \(error.localizedDescription)")
+                NSLog("Receive Error. \(error.localizedDescription)")
                 self.receiveMessages()
             }
         }
@@ -237,7 +244,12 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     
     private func processMessage(_ data: Data) async {
         do {
+            NSLog("----> Message received: \(String(data: data, encoding: .utf8)) <----")
             let socketMessage = try JSONDecoder().decode(WebSocketMessage.self, from: data)
+            if socketMessage.message == "success" {
+                self.pendingSocketAuthorization = false
+                return
+            }
             self.currentRequest = socketMessage.request
             await self.notifyUser(message: socketMessage.message)
         } catch {

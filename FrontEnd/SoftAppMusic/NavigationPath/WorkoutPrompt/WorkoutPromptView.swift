@@ -12,7 +12,7 @@ struct WorkoutPromptView: View {
     private enum Status {
         case loading
         case initialized
-//        case invalidTosConsent
+        case invalidTosConsent
     }
     
     @EnvironmentObject private var appData: AppData
@@ -70,6 +70,13 @@ struct WorkoutPromptView: View {
             switch self.status {
             case .loading:
                 LoadingView(prompt: "Gathering preferences")
+            case .invalidTosConsent:
+                VStack {
+                    Text("No valid Spotify Credentials.  Please update below")
+                }
+                Button("Update Profile") {
+                    appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: false, invalidCredentials: true))
+                }
             case .initialized:
                 VStack {
                     Spacer()
@@ -126,17 +133,20 @@ struct WorkoutPromptView: View {
         }
     }
     
-    private func initializeWorkoutPrompt() async {
+    private func initializeWorkoutPrompt() async  -> Bool{
         self.status = .loading
         
         if !self.initialUse {
             guard await verifyTosConset() else {
-                appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: false, invalidCredentials: true))
-                return
+                self.status = .invalidTosConsent
+//                appData.viewPath.append(NavigationViews.userProfileView(createUserProfile: false, invalidCredentials: true))
+                return false
             }
         }
+        
         await buildWorkOutMusicMatches()
         self.status = .initialized
+        return true
     }
     
     private func buildWorkOutMusicMatches() async {
@@ -164,9 +174,10 @@ struct WorkoutPromptView: View {
         let profileData = await fetchUserData.fetchUserData(email: appData.currentUserEmail, token: appData.currentToken)
         
         guard let profileData, profileData.spotifyConsent else {
-            NSLog("Invalid Spotify credentials - routing to user profile view")
+            NSLog("Invalid Spotify credentials")
             return false
         }
+        appData.validSpotifyConsent = true
         NSLog("Valid Spotify credentials")
         return true
     }

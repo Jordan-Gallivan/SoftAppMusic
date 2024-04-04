@@ -9,6 +9,10 @@ import Foundation
 
 enum FetchMusicAndWorkoutMatches {
     
+    private struct WorkoutPreferences: Codable {
+        var workoutPreferences: [String: [String]]
+    }
+    
     /// Fetches Updated music types as MusicTypes Struct.  Expected JSON String from API:
     /// 
     /// `{"genres": ["genre1", "genre2", "genre3"] }`
@@ -76,13 +80,13 @@ enum FetchMusicAndWorkoutMatches {
             
             NSLog("Music Preferences received: \(String(data: data, encoding: .utf8) ?? "UNABLE TO PARSE")")
             // parse returned JSON
-            let userPreferences = try JSONDecoder().decode([String:[String]].self, from: data)
-            guard !userPreferences.isEmpty else {
+            let userPreferences = try JSONDecoder().decode(WorkoutPreferences.self, from: data)
+            guard !userPreferences.workoutPreferences.isEmpty else {
                 NSLog("ERROR fetching Musci Preferences.  Error parsing data, empty dictionary.")
                 return nil
             }
             
-            return WorkoutMusicMatches(existingWorkoutMusicMatches: userPreferences)
+            return WorkoutMusicMatches(existingWorkoutMusicMatches: userPreferences.workoutPreferences)
         } catch {
             NSLog("ERROR fetching user preferences.  \(error.localizedDescription)")
             return nil

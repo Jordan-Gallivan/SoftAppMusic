@@ -239,7 +239,7 @@ struct WorkoutView: View {
     }
     
     private func endWorkout() async {
-        self.status = .empty
+        self.status = .readyToWorkout
         polarController.endWorkout()
     }
     
