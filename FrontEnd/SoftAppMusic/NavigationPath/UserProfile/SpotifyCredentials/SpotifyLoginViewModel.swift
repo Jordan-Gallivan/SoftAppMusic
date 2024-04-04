@@ -31,6 +31,7 @@ enum SpotifyURLBuilder {
         components.queryItems = [
             "client_id": clientID,
             "response_type": "code",
+            "scope": scope,
             "redirect_uri": "softAppSpring2024://callback",
             "state": state
         ].map { URLQueryItem(name: $0, value: $1)}
