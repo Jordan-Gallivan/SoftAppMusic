@@ -246,3 +246,8 @@ Mkfile.old
 dkms.conf
 
 .DS_Store
+
+#Node
+node_modules/
+.env
+
