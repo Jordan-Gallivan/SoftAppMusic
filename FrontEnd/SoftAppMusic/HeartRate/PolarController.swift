@@ -9,54 +9,55 @@ import RxSwift
 @MainActor
 class PolarController: ObservableObject {
     
+    /// struct for encoding hr data -> BE
     private struct HeartRateData: Codable {
         var heartRate: Int
     }
     
-    private var api = PolarBleApiDefaultImpl.polarImplementation(DispatchQueue.main,
-                                                                 features: [PolarBleSdkFeature.feature_hr,
-                                                                            PolarBleSdkFeature.feature_polar_sdk_mode,
-                                                                            PolarBleSdkFeature.feature_battery_info,
-                                                                            PolarBleSdkFeature.feature_device_info,])
+    /// Polar SDK attributes
+    @Published var isBluetoothOn: Bool
+    @Published var deviceConnectionState: DeviceConnectionState = DeviceConnectionState.disconnected(deviceId)
+    @Published var deviceSearch: DeviceSearch = DeviceSearch()
+    @Published var sdkModeFeature: SdkModeFeature = SdkModeFeature()
+    @Published var deviceInfoFeature: DeviceInfoFeature = DeviceInfoFeature()
+    @Published var batteryStatusFeature: BatteryStatusFeature = BatteryStatusFeature()
+    private var autoConnectDisposable: Disposable?
+    private var searchDevicesTask: Task<Void, Never>? = nil
+    @Published var generalMessage: Message? = nil
+    private let disposeBag = DisposeBag()
+    private var api = PolarBleApiDefaultImpl.polarImplementation(
+        DispatchQueue.main,
+        features: [PolarBleSdkFeature.feature_hr,
+                   PolarBleSdkFeature.feature_polar_sdk_mode,
+                   PolarBleSdkFeature.feature_battery_info,
+                   PolarBleSdkFeature.feature_device_info,])
 
+    /// hr monitor and data
     private static var deviceId = "9AD13824"
-    
-    @Published var workoutSession: WorkoutSession = WorkoutSession()
-    @Published var notificationPending: Bool = false
-    private var socketAttempts: Int = 0
-    @Published var socketSuccess: Bool = true
-    
     @Published var currentHr: Int? = nil
-    private var timer: Timer? = nil
     var hrSteaming: Bool = true
     private var hrSteamDisposable: Disposable?
-
     var hrString: String {
         if let currentHr {
             return "\(currentHr)"
         }
         return "--"
     }
+    private var timer: Timer? = nil // timer to stream HR data every 1.0 second
     
-    @Published var isBluetoothOn: Bool
-//    @Published var isBroadcasListenOn: Bool = false // TODO: Determine if necessary
+    /// Websocket attributes
+    @Published var workoutSession: WorkoutSession = WorkoutSession()
+    private var socketAttempts: Int = 0
+    @Published var socketSuccess: Bool = true
     
-    @Published var deviceConnectionState: DeviceConnectionState = DeviceConnectionState.disconnected(deviceId)
+    /// Notification attributes
+    @Published var notificationPending: Bool = false
+    private var notificationTimer: Timer? = nil
+    private let notificationTimeLimit =  15.0
+    @Published var notificationTimeProgress = 0.0
+    private var notificationElapsedSeconds = 0.0
     
-    @Published var deviceSearch: DeviceSearch = DeviceSearch()
     
-    @Published var sdkModeFeature: SdkModeFeature = SdkModeFeature()
-    
-    @Published var deviceInfoFeature: DeviceInfoFeature = DeviceInfoFeature()
-    
-    @Published var batteryStatusFeature: BatteryStatusFeature = BatteryStatusFeature()
-    
-    private var autoConnectDisposable: Disposable?
-    
-    private var searchDevicesTask: Task<Void, Never>? = nil
-    
-    @Published var generalMessage: Message? = nil
-    private let disposeBag = DisposeBag()
     
     init() {
         self.isBluetoothOn = api.isBlePowered
@@ -85,7 +86,8 @@ class PolarController: ObservableObject {
             email: currentUserEmail,
             token: currentToken,
             workoutType: workoutType,
-            musicType: musicType) { self.notificationPending = $0 }
+            musicType: musicType,
+            notificationTimeLimit: notificationTimeLimit ) { self.notificationHandler($0) }
         guard case .connected = workoutSession.status else {
             if case .error(let error) = workoutSession.status {
                 return error
@@ -100,7 +102,6 @@ class PolarController: ObservableObject {
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             Task {
                 await self.sendHrData()
-                #warning("remove below")
             }
         }
         NSLog("starting Timer")
@@ -109,31 +110,44 @@ class PolarController: ObservableObject {
         return nil
     }
     
-    func testInit() {
-        workoutSession.testInit(){ self.notificationPending = $0 }
-    }
-    
-    /// <#Description#>
     func endWorkout() {
         self.timer?.invalidate()
         self.timer = nil
         workoutSession.disconnect()
     }
     
-    private var testHR = 0
+    private func notificationHandler(_ notificationStatus: Bool) {
+        DispatchQueue.main.async {
+            self.notificationPending = notificationStatus
+            if notificationStatus {
+                self.notificationTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+                    Task {
+                        await self.incrementNotificationTimer()
+                    }
+                }
+                self.notificationTimer?.fire()
+            } else {
+                self.notificationTimer?.invalidate()
+            }
+        }
+    }
+    
+    
+    private func incrementNotificationTimer() {
+        self.notificationElapsedSeconds += 0.1
+        self.notificationTimeProgress = min(1.0, self.notificationElapsedSeconds / self.notificationTimeLimit)
+    }
+    
     
     func sendHrData() {
-//        guard let hr = self.currentHr else {
-//            NSLog("HR IS NIL")
-////            self.socketSuccess = false
-//            return
-//        }
+        guard let hr = self.currentHr else {
+            NSLog("HR IS NIL")
+//            self.socketSuccess = false
+            return
+        }
         guard case .connected = workoutSession.status else {
             return
         }
-        testHR += 1
-        let hr = testHR
-        #warning("fix after testing")
         
         do {
             let data = try JSONEncoder().encode(HeartRateData(heartRate: hr))
@@ -148,6 +162,10 @@ class PolarController: ObservableObject {
         }
         socketAttempts = 0
         self.socketSuccess = true
+    }
+    
+    func startNotificationTimer() {
+        
     }
     
     func updateSelectedDevice( deviceId : String) {
@@ -297,7 +315,9 @@ class PolarController: ObservableObject {
                 .subscribe { e in
                     switch e {
                     case .next(let data):
-                        self.currentHr = Int(data[0].hr)
+                        DispatchQueue.main.async {
+                            self.currentHr = Int(data[0].hr)
+                        }
                     case .error(let error):
                         NSLog("Hr Stream failed: \(error)")
                         self.currentHr = nil

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C03353A2BC7763B0018DDC1 /* CircularProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0335392BC7763B0018DDC1 /* CircularProgressViewStyle.swift */; };
 		4C16F27C2B7166B000804477 /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27B2B7166B000804477 /* UserProfileData.swift */; };
 		4C16F27E2B71683C00804477 /* EmailRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F27D2B71683C00804477 /* EmailRegex.swift */; };
 		4C16F2862B71BFCD00804477 /* AsyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16F2852B71BFCD00804477 /* AsyncStatus.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C0335392BC7763B0018DDC1 /* CircularProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressViewStyle.swift; sourceTree = "<group>"; };
 		4C16F27B2B7166B000804477 /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
 		4C16F27D2B71683C00804477 /* EmailRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailRegex.swift; sourceTree = "<group>"; };
 		4C16F2852B71BFCD00804477 /* AsyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStatus.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				4C17C80C2B9F826100D3CFF0 /* WorkoutSession.swift */,
 				4C88F4B42BB1F8390002ED71 /* NotificationsRequiredView.swift */,
 				4C88F4BB2BB4DD4C0002ED71 /* WorkoutLoadingView.swift */,
+				4C0335392BC7763B0018DDC1 /* CircularProgressViewStyle.swift */,
 			);
 			path = WorkoutView;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				4C88F4B82BB3B0FA0002ED71 /* InitialView.swift in Sources */,
 				4CAA6EC12B85977000CE149D /* NavigationPathConstants.swift in Sources */,
 				4CE8FE132B7BF4DB00756509 /* ApplicationData.swift in Sources */,
+				4C03353A2BC7763B0018DDC1 /* CircularProgressViewStyle.swift in Sources */,
 				4C88F4BA2BB48FE20002ED71 /* FetchWebSocket.swift in Sources */,
 				4C17C80D2B9F826100D3CFF0 /* WorkoutSession.swift in Sources */,
 				4CE8FE182B7BFB7000756509 /* APIConstants.swift in Sources */,

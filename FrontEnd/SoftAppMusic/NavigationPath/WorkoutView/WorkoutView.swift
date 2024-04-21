@@ -92,22 +92,33 @@ struct WorkoutView: View {
                     Spacer()
                     
                     Text(polarController.workoutSession.pendingNotificationMessage ?? "")
+                        .multilineTextAlignment(.center)
+                        .font(.title2)
                     
                     Spacer()
                     
-                    Button("Continue Current Playlist") {
-                        polarController.workoutSession.rejectChanges()
+                    ZStack {
+                        ProgressView(value: polarController.notificationTimeProgress)
+                            .progressViewStyle(CircularProgressViewStyle())
+                        
+                        VStack {
+                            Button("Continue Current Playlist") {
+                                polarController.workoutSession.rejectChanges()
+                            }
+                            .buttonStyle(DefaultButtonStyling(buttonColor: .red,
+                                                              borderColor: .red,
+                                                              textColor: .white))
+                            
+                            Button("Accept New Playlist") {
+                                polarController.workoutSession.acceptChanges()
+                            }
+                            .buttonStyle(DefaultButtonStyling(buttonColor: .green,
+                                                              borderColor: .green,
+                                                              textColor: .white))
+                        }
                     }
-                    .buttonStyle(DefaultButtonStyling(buttonColor: .red,
-                                                      borderColor: .red,
-                                                      textColor: .white))
+                    Spacer()
                     
-                    Button("Accept New Playlist") {
-                        polarController.workoutSession.acceptChanges()
-                    }
-                    .buttonStyle(DefaultButtonStyling(buttonColor: .green,
-                                                      borderColor: .green,
-                                                      textColor: .white))
                     Spacer()
                 } else {
                     VStack {
@@ -116,6 +127,15 @@ struct WorkoutView: View {
                             .font(.largeTitle)
                         Text(polarController.hrString)
                             .font(.system(size: 30))
+                        
+//                        Button("Demo Notifications") {
+//                            Task {
+//                                await polarController.workoutSession.notifyUser(message: "Speeding up")
+//                            }
+//                        }
+//                        .buttonStyle(DefaultButtonStyling(buttonColor: StyleConstants.DarkBlue,
+//                                                          borderColor: StyleConstants.DarkBlue,
+//                                                          textColor: .white))
                         
                         Spacer()
                         Button("Stop") {
@@ -134,7 +154,7 @@ struct WorkoutView: View {
             }
         }
         .onAppear {
-            Task { await self.perforPreWorkoutChecks() }
+            Task { await self.performPreWorkoutChecks() }
         }
         .onDisappear {
             Task { await endWorkout() }
@@ -142,7 +162,7 @@ struct WorkoutView: View {
             
     }
     
-    private func perforPreWorkoutChecks() async {
+    private func performPreWorkoutChecks() async {
         self.status = .empty
         
         // check bluetooth status
@@ -154,13 +174,12 @@ struct WorkoutView: View {
         NSLog("Bluetooth check successful")
         
         // check polar connection
-//        await checkpolarStatus()
-//        guard case .polarConnected = status else {
-//            NSLog("Unable to connect to Polar Monitor")
-//            return
-//        }
-//        NSLog("Polar Monitor check successful")
-        #warning("fix after testing")
+        await checkpolarStatus()
+        guard case .polarConnected = status else {
+            NSLog("Unable to connect to Polar Monitor")
+            return
+        }
+        NSLog("Polar Monitor check successful")
         
         self.status = .checkingNotifications
         // check notification settings

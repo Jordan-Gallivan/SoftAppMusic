@@ -43,6 +43,7 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
 //    @Published var notificationPending: Bool = false
     @Published var pendingNotificationMessage: String? = nil
     private var notificationPendingTrigger: (Bool) -> Void = { _ in }
+    private var notificationTimeLimit: Double = 0.0
     
     override init() {
         super.init()
@@ -69,10 +70,6 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         }
     }
     
-    func testInit(notificationPendingTrigger: @escaping (Bool) -> Void ) {
-        self.notificationPendingTrigger = notificationPendingTrigger
-    }
-    
     /// Connects to the websocket by first fetching the url and then initiating a websocket connection.  Outbound JSON:
     /// `{`
     /// `  "workoutType": "exampleWorkoutType",
@@ -92,8 +89,9 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
                                 token: String,
                                 workoutType: String,
                                 musicType: String,
+                                notificationTimeLimit: Double,
                                 notificationPendingTrigger: @escaping (Bool) -> Void ) async {
-        
+        self.notificationTimeLimit = notificationTimeLimit
         self.notificationPendingTrigger = notificationPendingTrigger
         self.status = .connecting
         
@@ -135,8 +133,6 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         NSLog("Connected to WebSocket")
         socket?.resume()
 
-        
-
         NSLog("Receiving Messages")
         self.receiveMessages()
         NSLog("Pausing until handshake complete")
@@ -170,7 +166,6 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
                     self.receiveMessages()
                 case .string(let messageString):
                     self.messages.append(messageString)
-//                    NSLog("----> Message received: \(messageString) <----")
                     Task {
                         await self.processMessage(Data(messageString.utf8))
                     }
@@ -226,11 +221,12 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
         self.notificationPendingTrigger(true)
         
         self.pendingNotificationMessage = content.body
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + notificationTimeLimit) {
             if self.pendingNotificationMessage != nil {
                 print("deactivate initiated")
                 self.deactivateNotification(id: id)
+                self.rejectChanges()
             }
         }
     }
@@ -244,14 +240,25 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     
     private func processMessage(_ data: Data) async {
         do {
-            NSLog("----> Message received: \(String(data: data, encoding: .utf8)) <----")
+            NSLog("----> Message received: \(String(data: data, encoding: .utf8) ?? "DEFAULTVALUE") <----")
             let socketMessage = try JSONDecoder().decode(WebSocketMessage.self, from: data)
             if socketMessage.message == "success" {
                 self.pendingSocketAuthorization = false
                 return
             }
             self.currentRequest = socketMessage.request
-            await self.notifyUser(message: socketMessage.message)
+            
+            var message = ""
+            switch socketMessage.message {
+            case "slow":
+                message = "slowing down"
+            case "fast":
+                message = "speeding up"
+            default:
+                NSLog("message not in correct format: \(socketMessage.message)")
+                return
+            }
+            await self.notifyUser(message: message)
         } catch {
             NSLog("error processing message: \(error.localizedDescription)")
         }
@@ -268,7 +275,7 @@ class WorkoutSession: NSObject, ObservableObject, UNUserNotificationCenterDelega
     }
     
     func rejectChanges() {
-        NSLog("User accepted changes")
+        NSLog("User rejected changes")
         self.deactivateNotification()
         guard let data = buildMessage(message: "reject") else {
             return
